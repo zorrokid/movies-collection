@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using movieAPI.ViewModels;
 
 namespace movieAPI.Controllers.UseCases.AddMovie
 {
@@ -8,9 +9,9 @@ namespace movieAPI.Controllers.UseCases.AddMovie
     {
 
         [HttpGet]
-        public string Get()
+        public Movie Get()
         {
-            return "hello";
+            return new Movie(1, "Star Wars", "Tähtien sota");
         }
     }
 }
