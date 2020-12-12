@@ -8,10 +8,10 @@ namespace movieAPI.Controllers.UseCases.AddMovie
     public class AddMovieController : ControllerBase
     {
 
-        [HttpGet]
-        public Movie Get()
+        [HttpPost]
+        public MovieVM Post()
         {
-            return new Movie(1, "Star Wars", "Tähtien sota");
+            return new MovieVM(1, "Star Wars", "Tähtien sota");
         }
     }
 }
