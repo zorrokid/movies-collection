@@ -1,15 +1,18 @@
+using Application.Interfaces;
+using Domain.Entities;
+
 namespace Application.UseCases.AddMovie
 {
     public class AddMovieUseCase
     {
-        private readonly IMovieRepository repository;
+        private readonly IRepository<Movie> repository;
 
-        public AddMovie(IMovieRepository repository)
+        public AddMovieUseCase(IRepository<Movie> repository)
         {
             this.repository = repository;
         }
 
-        public AddMovie()
+        public void AddMovie()
         {
 
         }

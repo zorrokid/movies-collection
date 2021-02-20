@@ -2,9 +2,8 @@ using System.Collections.Generic;
 
 namespace Domain.Entities
 {
-    public class Movie
+    public class Movie : BaseEntity
     {
-        public int Id { get; private set; }
         public string OriginalTitle { get; private set; }
         public string LocalTitle { get; private set; }
 

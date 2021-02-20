@@ -1,8 +1,7 @@
 namespace Domain.Entities
 {
-    public class Role
+    public class Role : BaseEntity
     {
-        public int Id { get; private set; }
         public string RoleName { get; private set; }
 
         public Role(int id, string roleName)
