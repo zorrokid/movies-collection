@@ -13,10 +13,6 @@ namespace CsvImport
         private static IServiceProvider _serviceProvider;
         static void Main(string[] args)
         {
-            // var importClient = new CsvImportClient(new ImportCsvUseCase(new MoviesRepository<Movie>(new MoviesContext())));
-            // importClient.Import();
-            // Console.WriteLine("Hello World!");
-
             RegisterServices();
             IServiceScope scope = _serviceProvider.CreateScope();
             scope.ServiceProvider.GetRequiredService<ICsvImportClient>().Import();
