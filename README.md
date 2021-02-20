@@ -25,6 +25,10 @@ TODO: certificate problem on running localhost
     Restored /home/mikko/dev/dotnet/movies/CsvImport/CsvImport.csproj (in 56 ms).
     Restore succeeded.
 
+## Adding nuget-package to project
+
+    $ dotnet add package Microsoft.Extensions.DependencyInjection
+
 ## Adding project to solution
 
     $ dotnet sln add CsvImport/CsvImport.csproj 

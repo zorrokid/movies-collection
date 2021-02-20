@@ -10,9 +10,9 @@ namespace Infrastructure.Persistance
         protected readonly MoviesContext context;
         private DbSet<T> entities;
 
-        public MoviesRepository(MoviesContext context)
+        public MoviesRepository(/*MoviesContext context*/)
         {
-            this.context = context;
+            this.context = new MoviesContext();
             entities = context.Set<T>();
         }
 

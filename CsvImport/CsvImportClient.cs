@@ -2,7 +2,12 @@ using Application.UseCases.ImportCsv;
 
 namespace CsvImport
 {
-    public class CsvImportClient
+    public interface ICsvImportClient
+    {
+        void Import();
+    }
+
+    public class CsvImportClient : ICsvImportClient
     {
         private readonly IImportCsvUseCase imprtCsvUseCase;
 
