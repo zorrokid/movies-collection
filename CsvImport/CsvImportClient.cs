@@ -4,7 +4,7 @@ namespace CsvImport
 {
     public interface ICsvImportClient
     {
-        void Import();
+        void Import(string filePath);
     }
 
     public class CsvImportClient : ICsvImportClient
@@ -16,9 +16,9 @@ namespace CsvImport
             this.imprtCsvUseCase = imprtCsvUseCase;
         }
 
-        public void Import()
+        public void Import(string filePath)
         {
-            imprtCsvUseCase.ImportCsv();
+            imprtCsvUseCase.ImportCsv(filePath);
         }
 
     }

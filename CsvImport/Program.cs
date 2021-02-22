@@ -13,9 +13,15 @@ namespace CsvImport
         private static IServiceProvider _serviceProvider;
         static void Main(string[] args)
         {
+            if (args.Length == 0) 
+            {
+                Console.WriteLine("Path to CSV-file must be provided");
+                return;
+            }
+            string filePath = args[0];
             RegisterServices();
             IServiceScope scope = _serviceProvider.CreateScope();
-            scope.ServiceProvider.GetRequiredService<ICsvImportClient>().Import();
+            scope.ServiceProvider.GetRequiredService<ICsvImportClient>().Import(filePath);
             DisposeServices();
         }
 
