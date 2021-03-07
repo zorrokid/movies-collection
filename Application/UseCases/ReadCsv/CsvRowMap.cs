@@ -1,6 +1,6 @@
 using CsvHelper.Configuration;
 
-namespace Application.UseCases.ImportCsv
+namespace Application.UseCases.ReadCsv
 {
     public class CsvRowMap : ClassMap<CsvRow>
     {

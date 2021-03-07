@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Application.Interfaces;
@@ -6,23 +7,23 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Domain.Entities;
 
-namespace Application.UseCases.ImportCsv
+namespace Application.UseCases.ReadCsv
 {
-    public interface IImportCsvUseCase
+    public interface IReadCsvUseCase
     {
-        void ImportCsv(String filePath);
+        IEnumerable<CsvRow> ReadCsv(String filePath);
     }
 
-    public class ImportCsvUseCase : IImportCsvUseCase
+    public class ReadCsvUseCase : IReadCsvUseCase
     {
         private readonly IRepository<Movie> repository;
 
-        public ImportCsvUseCase(IRepository<Movie> repository)
+        public ReadCsvUseCase(IRepository<Movie> repository)
         {
             this.repository = repository;
         }
 
-        public void ImportCsv(String filePath)
+        public IEnumerable<CsvRow> ReadCsv(String filePath)
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -32,11 +33,7 @@ namespace Application.UseCases.ImportCsv
             using (var csv = new CsvReader(reader, config))
             {
                 csv.Context.RegisterClassMap<CsvRowMap>();
-                var records = csv.GetRecords<CsvRow>();
-                foreach(var rec in records)
-                {
-                    Console.WriteLine(rec.ToString());
-                }
+                return csv.GetRecords<CsvRow>();
             }
         }
     }

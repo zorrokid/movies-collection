@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Application.UseCases.ImportCsv;
+using Application.UseCases.ReadCsv;
 using Application.Interfaces;
 using Infrastructure.Persistance;
 using Domain.Entities;
@@ -29,7 +29,7 @@ namespace CsvImport
         {
             var services = new ServiceCollection();
             services.AddSingleton<IRepository<Movie>, MoviesRepository<Movie>>();
-            services.AddSingleton<IImportCsvUseCase, ImportCsvUseCase>();   
+            services.AddSingleton<IReadCsvUseCase, ReadCsvUseCase>();   
             services.AddSingleton<ICsvImportClient, CsvImportClient>();            
             _serviceProvider = services.BuildServiceProvider(true);
         }

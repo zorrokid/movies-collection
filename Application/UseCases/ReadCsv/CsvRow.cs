@@ -1,4 +1,4 @@
-namespace Application.UseCases.ImportCsv
+namespace Application.UseCases.ReadCsv
 {
     public class CsvRow
     {

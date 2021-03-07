@@ -1,4 +1,4 @@
-using Application.UseCases.ImportCsv;
+using Application.UseCases.ReadCsv;
 
 namespace CsvImport
 {
@@ -9,9 +9,9 @@ namespace CsvImport
 
     public class CsvImportClient : ICsvImportClient
     {
-        private readonly IImportCsvUseCase imprtCsvUseCase;
+        private readonly IReadCsvUseCase imprtCsvUseCase;
 
-        public CsvImportClient(IImportCsvUseCase imprtCsvUseCase)
+        public CsvImportClient(IReadCsvUseCase imprtCsvUseCase)
         {
             this.imprtCsvUseCase = imprtCsvUseCase;
         }

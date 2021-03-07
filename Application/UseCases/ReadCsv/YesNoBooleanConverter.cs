@@ -2,7 +2,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 
-namespace Application.UseCases.ImportCsv
+namespace Application.UseCases.ReadCsv
 {
     public class YesNoBooleanConverter : DefaultTypeConverter
     {
