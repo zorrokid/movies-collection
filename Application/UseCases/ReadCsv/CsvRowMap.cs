@@ -1,3 +1,4 @@
+using Application.Models;
 using CsvHelper.Configuration;
 
 namespace Application.UseCases.ReadCsv

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Application.Interfaces;
+using Application.Models;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Domain.Entities;

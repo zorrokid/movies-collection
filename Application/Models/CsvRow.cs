@@ -1,4 +1,4 @@
-namespace Application.UseCases.ReadCsv
+namespace Application.Models
 {
     public class CsvRow
     {
