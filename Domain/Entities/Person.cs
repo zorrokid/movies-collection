@@ -4,5 +4,6 @@ namespace Domain.Entities
     {
         public string GivenName { get; set; }
         public string Surname { get; set; }
+        public string FullName { get; set; }
     }
 }
