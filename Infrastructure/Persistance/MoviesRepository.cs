@@ -31,9 +31,11 @@ namespace Infrastructure.Persistance
             throw new System.NotImplementedException();
         }
 
-        public void Insert(T entity)
+        public T Add(T entity)
         {
-            throw new System.NotImplementedException();
+            entities.Add(entity);
+            context.SaveChanges();
+            return entity;
         }
 
         public void Update(T entity)

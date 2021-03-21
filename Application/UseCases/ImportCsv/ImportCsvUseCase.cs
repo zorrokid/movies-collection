@@ -5,21 +5,25 @@ namespace Application.UseCases.ImportCsv
 {
     public interface IImportCsvUseCase
     {
-        void Import(IEnumerable<CsvRow> rows);
+        void Import(IEnumerable<CsvRow> rows, List<ImportTypeEnum> importers);
     }
 
     public class ImportCsvUseCase : IImportCsvUseCase
     {
-        private readonly List<IDBImporter> importers;
+        private readonly DBImporterFactory factory;
 
-        public ImportCsvUseCase(List<IDBImporter> importers)
+        public ImportCsvUseCase(DBImporterFactory factory)
         {
-            this.importers = importers;
+            this.factory = factory;
         }
 
-        public void Import(IEnumerable<CsvRow> rows)
+        public void Import(IEnumerable<CsvRow> rows, List<ImportTypeEnum> importers)
         {
-
+            foreach(var importType in importers)
+            {
+                var importer = factory.GetImporter(importType);
+                importer.Import(rows);
+            }
         }
     }
 }

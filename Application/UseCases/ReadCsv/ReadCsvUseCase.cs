@@ -17,13 +17,6 @@ namespace Application.UseCases.ReadCsv
 
     public class ReadCsvUseCase : IReadCsvUseCase
     {
-        private readonly IRepository<Movie> repository;
-
-        public ReadCsvUseCase(IRepository<Movie> repository)
-        {
-            this.repository = repository;
-        }
-
         public IEnumerable<CsvRow> ReadCsv(String filePath)
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)

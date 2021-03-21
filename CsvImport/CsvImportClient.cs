@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Application.UseCases.ImportCsv;
 using Application.UseCases.ReadCsv;
 
 namespace CsvImport
@@ -9,16 +11,23 @@ namespace CsvImport
 
     public class CsvImportClient : ICsvImportClient
     {
-        private readonly IReadCsvUseCase imprtCsvUseCase;
+        private readonly IReadCsvUseCase readCsvUseCase;
+        private readonly IImportCsvUseCase importCsvUseCase;
 
-        public CsvImportClient(IReadCsvUseCase imprtCsvUseCase)
+        public CsvImportClient(IReadCsvUseCase readCsvUseCase, IImportCsvUseCase importCsvUseCase)
         {
-            this.imprtCsvUseCase = imprtCsvUseCase;
+            this.readCsvUseCase = readCsvUseCase;
+            this.importCsvUseCase = importCsvUseCase;
         }
 
         public void Import(string filePath)
         {
-            imprtCsvUseCase.ImportCsv(filePath);
+            var csvRows = readCsvUseCase.ReadCsv(filePath);
+            var importes = new List<ImportTypeEnum>
+            {
+                ImportTypeEnum.Director
+            };
+            importCsvUseCase.Import(csvRows, importes);
         }
 
     }

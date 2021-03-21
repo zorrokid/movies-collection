@@ -19,29 +19,22 @@ namespace Application.UseCases.ImportCsv
 
         public void Import(IEnumerable<CsvRow> csvRows)
         {
-            var persons = personRepository.GetAll();
-            var personRoles = personRoleRepository.GetAll();
+            var persons = personRepository.GetAll().ToList();
+            var personRoles = personRoleRepository.GetAll().ToList();
 
             foreach(var row in csvRows) 
             {
                 var importPerson = row.Director;
-                if (!persons.Any(x => $"{x.GivenName} {x.Surname}".ToLower() == importPerson.ToLower()))
+                if (!persons.Any(x => x.FullName.ToLower() == importPerson.ToLower()))
                 {
-                    var nameParts = importPerson.Split(' ');
-                    // var person = new Person
-                    // {
-                    //     GivenName = nameParts.Last();
-
-                    //};
-                    // personRepository.Add(new Person
-                    // {
-
-                    // });
+                    var person = new Person
+                    {
+                        FullName = importPerson
+                    };
+                    persons.Add(person);
+                    var id = personRepository.Add(person).Id;
                 }
             }
-            // check each entry if exists in db-collection
-            // if not write to db and proceed
-            throw new System.NotImplementedException();
         }
     }
 }
