@@ -1,5 +1,6 @@
 using Application.Interfaces;
 using Infrastructure.Persistance;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure
@@ -9,6 +10,7 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddTransient(typeof(IRepository<>), typeof(MoviesRepository<>));
+            services.AddDbContext<MoviesContext>(options => options.UseSqlite("Data Source=movies.db"));
             return services;
         }
     }

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Linq;
 using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +8,10 @@ namespace Infrastructure.Persistance
     public class MoviesRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly MoviesContext context;
-        private DbSet<T> entities;
-
-        public MoviesRepository(/*MoviesContext context*/)
+        
+        public MoviesRepository(MoviesContext context)
         {
-            this.context = new MoviesContext();
-            entities = context.Set<T>();
+            this.context = context;
         }
 
         public void Delete(int id)
@@ -21,9 +19,9 @@ namespace Infrastructure.Persistance
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            throw new System.NotImplementedException();
+            return context.Set<T>();
         }
 
         public T GetById(int id)
@@ -33,14 +31,16 @@ namespace Infrastructure.Persistance
 
         public T Add(T entity)
         {
-            entities.Add(entity);
+            context.Add(entity);
             context.SaveChanges();
             return entity;
         }
 
-        public void Update(T entity)
+        public T Update(T entity)
         {
-            throw new System.NotImplementedException();
+            context.Update(entity);
+            context.SaveChanges();
+            return entity;
         }
     }
 }
