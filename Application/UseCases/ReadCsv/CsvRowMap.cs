@@ -1,4 +1,5 @@
 using Application.Models;
+using Application.UseCases.ReadCsv.TypeConverters;
 using CsvHelper.Configuration;
 
 namespace Application.UseCases.ReadCsv
@@ -12,11 +13,11 @@ namespace Application.UseCases.ReadCsv
             Map(m => m.OriginalTitle).Name("Original title");
             Map(m => m.LocalTitle).Name("Local title");
             Map(m => m.Year).Name("Year");
-            Map(m => m.MediaType).Name("Media type");
-            Map(m => m.Type).Name("Type");
+            Map(m => m.ProductionType).Name("Media type").TypeConverter<ProductionTypeEnumConverter>();
+            Map(m => m.MediaType).Name("Type").TypeConverter<MediaTypeEnumConverter>();
             Map(m => m.Edition).Name("Edition");
             Map(m => m.Country).Name("Country");
-            Map(m => m.CaseType).Name("Case");
+            Map(m => m.CaseType).Name("Case").TypeConverter<CaseTypeEnumConverter>();
             Map(m => m.Discs).Name("Discs");
             Map(m => m.HasSubFi).Name("Sub-fi").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.HasSubEn).Name("Sub-en").TypeConverter<YesNoBooleanConverter>();
@@ -37,6 +38,7 @@ namespace Application.UseCases.ReadCsv
             Map(m => m.HasLeaflet).Name("Vihkonen").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.HasSceneList).Name("Kohtausluettelo").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.IsTwoSidedDisc).Name("2 Sided Disc").TypeConverter<YesNoBooleanConverter>();
+            Map(m => m.HasTwoSidedCover).Name("2 Sided Cover").TypeConverter<YesNoBooleanConverter>();
             // 	Series	Publisher	Studio
         }
     }
