@@ -10,6 +10,9 @@ Swagger is started in following address: https://localhost:5001/swagger/index.ht
 
 TODO: certificate problem on running localhost
 
+# Using CsvImport
+
+Currently the database is Sqlite database. Migrations create the database in the Infrastucture-project and CsvImport must be run from the same directory where the movies.db database is (in Infrastructure-project root folder).
 
 # dotnet memo
 
