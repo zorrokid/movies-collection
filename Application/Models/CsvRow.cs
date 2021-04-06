@@ -1,3 +1,5 @@
+using Domain.Enumerations;
+
 namespace Application.Models
 {
     public class CsvRow
@@ -6,11 +8,11 @@ namespace Application.Models
         public string OriginalTitle { get; set;}
         public string LocalTitle { get; set;}
         public int? Year { get; set;}
-        public string MediaType { get; set;}
-        public string Type { get; set;}
+        public ProductionTypeEnum ProductionType { get; set;}
+        public MediaTypeEnum[] MediaType { get; set;}
         public string Edition { get; set; }
         public string Country { get; set; }
-        public string CaseType { get; set; }
+        public CaseTypeEnum CaseType { get; set; }
         public int? Discs { get; set; }
         public bool HasSubFi { get; set; }
         public bool HasSubEn { get; set; }
@@ -18,11 +20,12 @@ namespace Application.Models
         public int? RunningTime { get; set; }
         public string Director { get; set; }
         public string Status { get; set; }
-        public string Condition { get; set; }
+        public ConditionEnum Condition { get; set; }
         public string Notes { get; set; }
         public bool IsWatched { get; set; }
         public bool IsRental { get; set; }
         public bool HasSlipCover { get; set; }
+        public bool HasTwoSidedCover { get; set; }
         public bool HasHologram { get; set; }
         public int? Id { get; set; }
         public string Barcode { get; set; }

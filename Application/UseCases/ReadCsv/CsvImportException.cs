@@ -2,17 +2,17 @@ using System;
 
 namespace Application.UseCases.ReadCsv
 {
-    public class CvsImportException : Exception
+    public class CsvImportException : Exception
     {
-        public CvsImportException()
+        public CsvImportException()
         {
         }
 
-        public CvsImportException(string message) : base(message)
+        public CsvImportException(string message) : base(message)
         {
         }
 
-        public CvsImportException(string message, Exception innerException) : base(message, innerException)
+        public CsvImportException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }
