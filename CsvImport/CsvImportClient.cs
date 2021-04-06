@@ -22,12 +22,7 @@ namespace CsvImport
 
         public void Import(string filePath)
         {
-            var csvRows = readCsvUseCase.ReadCsv(filePath);
-            var importes = new List<ImportTypeEnum>
-            {
-                ImportTypeEnum.Director
-            };
-            importCsvUseCase.Import(csvRows, importes);
+            readCsvUseCase.ReadCsv(filePath);
         }
 
     }

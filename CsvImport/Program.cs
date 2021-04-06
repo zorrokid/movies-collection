@@ -32,7 +32,6 @@ namespace CsvImport
         private static void RegisterServices()
         {
             var services = new ServiceCollection()
-                .AddScoped<IRepository<Movie>, MoviesRepository<Movie>>()
                 .AddScoped<IReadCsvUseCase, ReadCsvUseCase>()
                 .AddScoped<IImportCsvUseCase, ImportCsvUseCase>()
                 .AddScoped<IDBImporter, DirectorImporter>()

@@ -3,16 +3,16 @@ using Application.Models;
 
 namespace Application.UseCases.ImportCsv
 {
-    public interface IImportCsvUseCase
+    public interface IImportCollectionsUseCase
     {
         void Import(IEnumerable<CsvRow> rows, List<ImportTypeEnum> importers);
     }
 
-    public class ImportCsvUseCase : IImportCsvUseCase
+    public class ImportCollectionsUseCase : IImportCsvUseCase
     {
         private readonly DBImporterFactory factory;
 
-        public ImportCsvUseCase(DBImporterFactory factory)
+        public ImportCollectionsUseCase(DBImporterFactory factory)
         {
             this.factory = factory;
         }
