@@ -2,7 +2,7 @@ namespace Domain.Enumerations
 {
     public enum ConditionEnum
     {
-        New = 0, // Still Wrapped
+        New = 1, // Still Wrapped
         Excellent,
         Good,
         Fair,

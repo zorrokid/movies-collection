@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.UseCases.ImportCsv
+namespace Infrastructure.Persistance.Csv.Exceptions
 {
     public class DbImportException : Exception
     {

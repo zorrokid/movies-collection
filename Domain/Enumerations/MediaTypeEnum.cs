@@ -2,7 +2,7 @@ namespace Domain.Enumerations
 {
     public enum MediaTypeEnum
     {
-        DVD = 0,
+        DVD = 1,
         BluRay,
         VHS,
         UltraHD4K,

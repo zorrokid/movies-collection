@@ -1,6 +1,6 @@
 using Domain.Enumerations;
 
-namespace Application.Models
+namespace Infrastructure.Persistance.Csv.Models
 {
     public class CsvRow
     {

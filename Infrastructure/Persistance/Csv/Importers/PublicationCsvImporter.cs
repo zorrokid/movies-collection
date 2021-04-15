@@ -1,31 +1,22 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Application.Interfaces;
-using Application.Models;
 using Domain.Entities;
+using Infrastructure.Persistance.Csv.Exceptions;
+using Infrastructure.Persistance.Csv.Models;
 
-namespace Application.UseCases.ImportCsv
+namespace Infrastructure.Persistance.Csv.Importers
 {
-    public interface IDBImporter
+    public class PublicationCsvImporter : ICsvImporter
     {
-        void Import(CsvRow csvRows);
-    }
 
-
-
-    /// <summary>
-    /// PublicationImporter is for special import case when publications are in separate csv-file
-    /// PublicationItems are later linked into these.
-    /// </summary>
-    public class PublicationImporter : IDBImporter
-    {
         private readonly IRepository<Publication> publicationRepository;
         private readonly IRepository<CaseType> caseTypeRepository;
         private readonly IRepository<Company> companyRepository;
         private readonly IRepository<CompanyRole> companyRoleRepository;
 
-        public PublicationImporter(IRepository<Publication> publicationRepository, 
+
+        public PublicationCsvImporter(IRepository<Publication> publicationRepository, 
             IRepository<CaseType> caseTypeRepository,
             IRepository<Company> companyRepository,
             IRepository<CompanyRole> companyRoleRepository)
@@ -72,6 +63,7 @@ namespace Application.UseCases.ImportCsv
                 CountryCode = csvRow.Country,
                 Publisher = publisher
             };
+            publicationRepository.Add(publication);           
         }
     }
 }

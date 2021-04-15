@@ -4,8 +4,9 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Domain.Enumerations;
+using Infrastructure.Persistance.Csv.Exceptions;
 
-namespace Application.UseCases.ReadCsv.TypeConverters
+namespace Infrastructure.Persistance.Csv.TypeConverters
 {
     public class CaseTypeEnumConverter : DefaultTypeConverter
     {

@@ -1,11 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using Application;
-using Application.UseCases.ReadCsv;
-using Application.Interfaces;
-using Infrastructure.Persistance;
-using Domain.Entities;
-using Application.UseCases.ImportCsv;
 using Infrastructure;
 
 namespace CsvImport
@@ -32,9 +27,6 @@ namespace CsvImport
         private static void RegisterServices()
         {
             var services = new ServiceCollection()
-                .AddScoped<IReadCsvUseCase, ReadCsvUseCase>()
-                .AddScoped<IImportCsvUseCase, ImportCsvUseCase>()
-                .AddScoped<IDBImporter, DirectorImporter>()
                 .AddScoped<ICsvImportClient, CsvImportClient>()
                 .AddApplicationServices()
                 .AddInfrastructureServices();

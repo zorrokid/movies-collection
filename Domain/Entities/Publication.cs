@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Domain.Entities
 {
+    /// <summary>
+    /// Publication is a container for publication items (movies, tv-serie seasons, documentaries etc).
+    /// It has a case (usually) with barcode. Something that is sold in stores and contain some kind of media.
+    /// </summary>
     public class Publication : BaseEntity
     {
         public string OriginalTitle { get; set; }
@@ -19,6 +23,7 @@ namespace Domain.Entities
         public bool HasBooklet { get; set; }
         public Company Publisher { get; set; }
         public int ImportOriginId { get; set; }
+        public List<PublicationItem> PublicationItems {get; } = new List<PublicationItem>();
         public List<CoverLanguage> CoverLanguages { get; } = new List<CoverLanguage>();
     }
 }

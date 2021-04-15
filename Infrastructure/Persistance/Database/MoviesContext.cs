@@ -7,7 +7,8 @@ namespace Infrastructure.Persistance
     public class MoviesContext : DbContext
     {
         public MoviesContext(DbContextOptions<MoviesContext> options) : base(options) {}
-        public DbSet<ProductionRelease> Movies { get; set; }
+        
+        public DbSet<Production> Productions { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<PersonRole> PersonRoles { get; set; }
         public DbSet<CollectionStatus> CollectionStatuses { get; set; }

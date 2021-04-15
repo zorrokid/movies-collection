@@ -5,9 +5,9 @@ namespace Application.UseCases.AddMovie
 {
     public class AddMovieUseCase
     {
-        private readonly IRepository<ProductionRelease> repository;
+        private readonly IRepository<Production> repository;
 
-        public AddMovieUseCase(IRepository<ProductionRelease> repository)
+        public AddMovieUseCase(IRepository<Production> repository)
         {
             this.repository = repository;
         }

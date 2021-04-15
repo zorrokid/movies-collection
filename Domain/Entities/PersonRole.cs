@@ -5,7 +5,6 @@ namespace Domain.Entities
         public Person Person { get; set; }
         public PersonRoleType Role { get; set; }
 
-        public int MovieId { get; set; }
-        public ProductionRelease Movie { get; set; }
+        public Production Movie { get; set; }
     }
 }

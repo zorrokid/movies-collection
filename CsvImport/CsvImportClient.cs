@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Application.UseCases.ImportCsv;
-using Application.UseCases.ReadCsv;
 
 namespace CsvImport
 {
@@ -11,18 +9,16 @@ namespace CsvImport
 
     public class CsvImportClient : ICsvImportClient
     {
-        private readonly IReadCsvUseCase readCsvUseCase;
-        private readonly IImportCsvUseCase importCsvUseCase;
+        private readonly IImportPublicationsUseCase importPublicationsUseCase;
 
-        public CsvImportClient(IReadCsvUseCase readCsvUseCase, IImportCsvUseCase importCsvUseCase)
+        public CsvImportClient(IImportPublicationsUseCase importPublicationsUseCase)
         {
-            this.readCsvUseCase = readCsvUseCase;
-            this.importCsvUseCase = importCsvUseCase;
+            this.importPublicationsUseCase = importPublicationsUseCase;
         }
 
         public void Import(string filePath)
         {
-            readCsvUseCase.ReadCsv(filePath);
+            importPublicationsUseCase.Import(filePath);
         }
 
     }

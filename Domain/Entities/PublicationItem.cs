@@ -2,6 +2,10 @@ using System.Collections.Generic;
 
 namespace Domain.Entities
 {
+    /// <summary>
+    /// Publication item represents a production in publication. Production can be spread over multiple media items of different type.
+    /// e.g. movie can have two DVD's or one DVD and one Blu-ray disc. PublicationItem is always part of Publication.
+    /// </summary>
     public class PublicationItem : BaseEntity
     {
         public Publication Publication { get; set; }

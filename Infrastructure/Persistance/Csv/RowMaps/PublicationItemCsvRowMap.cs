@@ -1,12 +1,12 @@
-using Application.Models;
-using Application.UseCases.ReadCsv.TypeConverters;
 using CsvHelper.Configuration;
+using Infrastructure.Persistance.Csv.Models;
+using Infrastructure.Persistance.Csv.TypeConverters;
 
-namespace Application.UseCases.ReadCsv
+namespace Infrastructure.Persistance.Csv.RowMaps
 {
-    public class CsvRowMap : ClassMap<CsvRow>
+    public class PublicationItemCsvRowMap : ClassMap<CsvRow>
     {
-        public CsvRowMap()
+        public PublicationItemCsvRowMap()
         {
             Map(m => m.Id).Name("Id");
             Map(m => m.IsChecked).Name("Checked").TypeConverter<YesNoBooleanConverter>();
