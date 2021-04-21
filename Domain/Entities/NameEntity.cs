@@ -1,6 +1,6 @@
 namespace Domain.Entities
 {
-    public class EnumEntity : BaseEntity
+    public class NameEntity : BaseEntity
     {
         public string Name { get; set; }
     }

@@ -5,6 +5,6 @@ namespace Infrastructure.Persistance.Csv.Readers
 {
     public interface ICsvReader
     {
-         IEnumerable<CsvRow> ReadCsv(string filePath);
+         void ReadCsv(string filePath);
     }
 }

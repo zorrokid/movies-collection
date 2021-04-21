@@ -1,6 +1,6 @@
 namespace Domain.Entities
 {
-    public class CompanyRole : EnumEntity
+    public class CompanyRole : NameEntity
     {
 
         public Company Company { get; set; }

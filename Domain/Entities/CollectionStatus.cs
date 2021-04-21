@@ -1,6 +1,6 @@
 namespace Domain.Entities
 {
-    public class CollectionStatus : EnumEntity
+    public class CollectionStatus : NameEntity
     {
     }
 }

@@ -15,6 +15,7 @@ namespace Domain.Entities
         public string CountryCode { get; set; }
         public string Barcode { get; set; }
         public CaseType CaseType { get; set; }
+        public ConditionClass ConditionClass { get; set; }
         public bool HasSlipCover { get; set; }
         public bool HasHologram { get; set; }
         public bool IsRental { get; set; }

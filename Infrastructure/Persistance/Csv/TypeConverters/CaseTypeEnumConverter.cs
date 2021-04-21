@@ -4,7 +4,6 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Domain.Enumerations;
-using Infrastructure.Persistance.Csv.Exceptions;
 
 namespace Infrastructure.Persistance.Csv.TypeConverters
 {
@@ -25,14 +24,12 @@ namespace Infrastructure.Persistance.Csv.TypeConverters
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
             string enumKey = text.Trim().ToLower();
-            CaseTypeEnum caseType;
-            try
+            
+            CaseTypeEnum caseType = CaseTypeEnum.Undefined;
+            
+            if (EnumStringMap.ContainsKey(enumKey))
             {
                 caseType = EnumStringMap[enumKey];
-            }
-            catch(Exception e)
-            {
-                throw new CsvImportException($"Failed converting case type string {text} to enumeration.", e);
             }
             return caseType;
         }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using CsvHelper;
@@ -19,7 +18,7 @@ namespace Infrastructure.Persistance.Csv.Readers
             this.csvImporter = csvImporter;
         }
 
-        public IEnumerable<CsvRow> ReadCsv(string filePath)
+        public void ReadCsv(string filePath)
         {   
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -33,8 +32,8 @@ namespace Infrastructure.Persistance.Csv.Readers
                 foreach (var record in records)
                 {
                     Console.WriteLine(record.OriginalTitle);
-                }
-                return records;
+                    csvImporter.Import(record);
+                }            
             }
         }
     }

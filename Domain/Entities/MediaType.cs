@@ -1,6 +1,6 @@
 namespace Domain.Entities
 {
-    public class MediaType : EnumEntity
+    public class MediaType : NameEntity
     {
         
     }

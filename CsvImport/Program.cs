@@ -2,6 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Application;
 using Infrastructure;
+using Application.Interfaces;
+using Infrastructure.Integration;
+using Infrastructure.Persistance.Csv.Readers;
 
 namespace CsvImport
 {
@@ -28,6 +31,8 @@ namespace CsvImport
         {
             var services = new ServiceCollection()
                 .AddScoped<ICsvImportClient, CsvImportClient>()
+                .AddScoped<IIntegration, Integration>()
+                .AddScoped<ICsvReader, PublicationCsvReader>()
                 .AddApplicationServices()
                 .AddInfrastructureServices();
 

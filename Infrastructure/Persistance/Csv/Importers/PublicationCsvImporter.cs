@@ -36,16 +36,21 @@ namespace Infrastructure.Persistance.Csv.Importers
                 return;
             }
             var caseType = caseTypeRepository.GetById((int)csvRow.CaseType);
-            var publisherName = csvRow.Publisher.Trim();
-            Company publisher = companyRepository.GetAll().Where(c => c.Name == publisherName).FirstOrDefault();
-            if (publisher == null)
+            Company publisher = null;
+            if (csvRow.Publisher != null)
             {
-                publisher = new Company
+                var publisherName = csvRow.Publisher.Trim();
+                publisher = companyRepository.GetAll().Where(c => c.Name == publisherName).FirstOrDefault();
+                if (publisher == null)
                 {
-                    Name = publisherName
-                };
-                companyRepository.Add(publisher);
+                    publisher = new Company
+                    {
+                        Name = publisherName
+                    };
+                    companyRepository.Add(publisher);
+                }
             }
+            
             var publication = new Publication
             {
                 ImportOriginId = csvRow.Id.Value,

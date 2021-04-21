@@ -20,7 +20,7 @@ namespace Infrastructure.Persistance.Csv.Models
         public int? RunningTime { get; set; }
         public string Director { get; set; }
         public string Status { get; set; }
-        public ConditionEnum Condition { get; set; }
+        public ConditionClassEnum Condition { get; set; }
         public string Notes { get; set; }
         public bool IsWatched { get; set; }
         public bool IsRental { get; set; }

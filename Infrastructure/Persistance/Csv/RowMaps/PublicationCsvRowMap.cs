@@ -25,7 +25,7 @@ namespace Infrastructure.Persistance.Csv.RowMaps
             //Map(m => m.RunningTime).Name("Running time");
             //Map(m => m.Director).Name("Director");
             Map(m => m.Status).Name("Status");
-            Map(m => m.Condition).Name("Condition");
+            Map(m => m.Condition).Name("Condition").TypeConverter<ConditionClassEnumConverter>();
             Map(m => m.Notes).Name("Notes");
             //Map(m => m.IsWatched).Name("Watched").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.IsRental).Name("Rental").TypeConverter<YesNoBooleanConverter>();

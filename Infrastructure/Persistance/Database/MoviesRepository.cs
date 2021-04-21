@@ -26,7 +26,7 @@ namespace Infrastructure.Persistance
 
         public T GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return context.Set<T>().Where(o => o.Id == id).FirstOrDefault();
         }
 
         public T Add(T entity)

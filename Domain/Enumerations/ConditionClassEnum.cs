@@ -1,8 +1,9 @@
 namespace Domain.Enumerations
 {
-    public enum ConditionEnum
+    public enum ConditionClassEnum
     {
-        New = 1, // Still Wrapped
+        Undefined = 0,
+        New, // Still Wrapped
         Excellent,
         Good,
         Fair,

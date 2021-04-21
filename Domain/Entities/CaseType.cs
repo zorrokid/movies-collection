@@ -1,6 +1,6 @@
 namespace Domain.Entities
 {
-    public class CaseType : EnumEntity
+    public class CaseType : NameEntity
     {
         
     }

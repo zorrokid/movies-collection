@@ -14,6 +14,20 @@ namespace Infrastructure.Persistance
         public DbSet<CollectionStatus> CollectionStatuses { get; set; }
         public DbSet<ConditionClass> ConditionClasses { get; set; }
         public DbSet<CaseType> CaseTypes { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<CompanyRole> CompanyRoles { get; set; }
+        public DbSet<CompanyRoleType> CompanyRoleTypes { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<CoverLanguage> CoverLanguages { get; set; }
+        public DbSet<MediaItem> MediaItems { get; set; }
+        public DbSet<MediaType> MediaTypes { get; set; }
+        public DbSet<PersonRoleType> PersonRoleTypes { get; set; }
+        public DbSet<ProductionType> ProductionTypes { get; set; }
+        public DbSet<Publication> Publications { get; set; }
+        public DbSet<PublicationItem> PublicationItems { get; set; }
+        public DbSet<SpokenLanguage> SpokenLanguages { get; set; }
+        public DbSet<SubtitleLanguage> SubtitleLanguages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,32 +72,32 @@ namespace Infrastructure.Persistance
             {
                 new ConditionClass
                 {
-                    Id = (int) ConditionEnum.New,
+                    Id = (int) ConditionClassEnum.New,
                     Name = "New"
                 },
                 new ConditionClass
                 {
-                    Id = (int) ConditionEnum.Excellent,
+                    Id = (int) ConditionClassEnum.Excellent,
                     Name = "Excellent"
                 },
                 new ConditionClass
                 {
-                    Id = (int) ConditionEnum.Good,
+                    Id = (int) ConditionClassEnum.Good,
                     Name = "Good"
                 },
                 new ConditionClass
                 {
-                    Id = (int) ConditionEnum.Fair,
+                    Id = (int) ConditionClassEnum.Fair,
                     Name = "Fair"
                 },
                 new ConditionClass
                 {
-                    Id = (int) ConditionEnum.Poor,
+                    Id = (int) ConditionClassEnum.Poor,
                     Name = "Poor"
                 },
                 new ConditionClass
                 {
-                    Id = (int) ConditionEnum.Bad,
+                    Id = (int) ConditionClassEnum.Bad,
                     Name = "Bad"
                 }
             };

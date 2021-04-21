@@ -1,6 +1,6 @@
 namespace Domain.Entities
 {
-    public class PersonRoleType : EnumEntity
+    public class PersonRoleType : NameEntity
     {
     }
 }
