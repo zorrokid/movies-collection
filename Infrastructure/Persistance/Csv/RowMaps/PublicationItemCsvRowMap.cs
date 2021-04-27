@@ -23,7 +23,7 @@ namespace Infrastructure.Persistance.Csv.RowMaps
             Map(m => m.HasSubEn).Name("Sub-en").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.AspectRatio).Name("Aspect ratio");
             Map(m => m.RunningTime).Name("Running time");
-            Map(m => m.Director).Name("Director");
+            Map(m => m.Directors).Name("Director").TypeConverter<CharSeparatedListConverter>();
             Map(m => m.Status).Name("Status");
             Map(m => m.Condition).Name("Condition").TypeConverter<ConditionClassEnumConverter>();
             Map(m => m.Notes).Name("Notes");

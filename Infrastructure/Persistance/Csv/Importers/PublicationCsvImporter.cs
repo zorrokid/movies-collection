@@ -7,24 +7,14 @@ using Infrastructure.Persistance.Csv.Models;
 
 namespace Infrastructure.Persistance.Csv.Importers
 {
-    public class PublicationCsvImporter : ICsvImporter
+    public class PublicationCsvImporter : AbstractCsvImporter, ICsvImporter
     {
-
-        private readonly IRepository<Publication> publicationRepository;
-        private readonly IRepository<CaseType> caseTypeRepository;
-        private readonly IRepository<Company> companyRepository;
-        private readonly IRepository<CompanyRole> companyRoleRepository;
-
-
         public PublicationCsvImporter(IRepository<Publication> publicationRepository, 
             IRepository<CaseType> caseTypeRepository,
             IRepository<Company> companyRepository,
-            IRepository<CompanyRole> companyRoleRepository)
+            IRepository<CompanyRole> companyRoleRepository) 
+            : base(companyRepository, companyRoleRepository, caseTypeRepository, publicationRepository)
         {
-            this.publicationRepository = publicationRepository;
-            this.caseTypeRepository = caseTypeRepository;
-            this.companyRepository = companyRepository;
-            this.companyRoleRepository = companyRoleRepository;
         }
 
         public void Import(CsvRow csvRow)
@@ -35,39 +25,7 @@ namespace Infrastructure.Persistance.Csv.Importers
                 Console.WriteLine($"Publication with id {csvRow.Id} already imported - skipping.");
                 return;
             }
-            var caseType = caseTypeRepository.GetById((int)csvRow.CaseType);
-            Company publisher = null;
-            if (csvRow.Publisher != null)
-            {
-                var publisherName = csvRow.Publisher.Trim();
-                publisher = companyRepository.GetAll().Where(c => c.Name == publisherName).FirstOrDefault();
-                if (publisher == null)
-                {
-                    publisher = new Company
-                    {
-                        Name = publisherName
-                    };
-                    companyRepository.Add(publisher);
-                }
-            }
-            
-            var publication = new Publication
-            {
-                ImportOriginId = csvRow.Id.Value,
-                IsVerified = csvRow.IsChecked,
-                Barcode = csvRow.Barcode,
-                HasBooklet = csvRow.HasLeaflet,
-                HasHologram = csvRow.HasHologram,
-                HasSlipCover = csvRow.HasSlipCover,
-                IsRental = csvRow.IsRental,
-                HasTwoSidedCover = csvRow.HasTwoSidedCover,
-                Notes = csvRow.Notes,
-                OriginalTitle = csvRow.OriginalTitle,
-                LocalTitle = csvRow.LocalTitle,
-                CaseType = caseType,
-                CountryCode = csvRow.Country,
-                Publisher = publisher
-            };
+            var publication = CreatePublication(csvRow);
             publicationRepository.Add(publication);           
         }
     }

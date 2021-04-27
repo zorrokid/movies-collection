@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Domain.Enumerations;
 
 namespace Infrastructure.Persistance.Csv.Models
@@ -18,7 +19,7 @@ namespace Infrastructure.Persistance.Csv.Models
         public bool HasSubEn { get; set; }
         public string AspectRatio { get; set; }
         public int? RunningTime { get; set; }
-        public string Director { get; set; }
+        public List<string> Directors { get; set; }
         public string Status { get; set; }
         public ConditionClassEnum Condition { get; set; }
         public string Notes { get; set; }
