@@ -1,9 +1,8 @@
 namespace Domain.Entities
 {
-    public class Person : BaseEntity
+    public class Person : NameEntity
     {
         public string GivenName { get; set; }
         public string Surname { get; set; }
-        public string FullName { get; set; }
     }
 }

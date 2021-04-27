@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using Application.Interfaces;
 using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistance
 {
@@ -19,7 +19,7 @@ namespace Infrastructure.Persistance
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
             return context.Set<T>();
         }
