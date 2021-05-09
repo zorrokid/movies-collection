@@ -4,7 +4,7 @@ using Application;
 using Infrastructure;
 using Application.Interfaces;
 using Infrastructure.Integration;
-using Infrastructure.Persistance.Csv.Readers;
+using Infrastructure.Persistence.Csv.Readers;
 
 namespace CsvImport
 {

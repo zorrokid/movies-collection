@@ -1,5 +1,5 @@
 using Application.Interfaces;
-using Infrastructure.Persistance.Csv.Readers;
+using Infrastructure.Persistence.Csv.Readers;
 
 namespace Infrastructure.Integration
 {
