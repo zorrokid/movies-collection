@@ -4,9 +4,9 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Domain.Enumerations;
-using Infrastructure.Persistance.Csv.Exceptions;
+using Infrastructure.Persistence.Csv.Exceptions;
 
-namespace Infrastructure.Persistance.Csv.TypeConverters
+namespace Infrastructure.Persistence.Csv.TypeConverters
 {
     public class MediaTypeEnumConverter : DefaultTypeConverter
     {

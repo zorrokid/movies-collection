@@ -1,9 +1,9 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using Infrastructure.Persistance.Csv.Exceptions;
+using Infrastructure.Persistence.Csv.Exceptions;
 
-namespace Infrastructure.Persistance.Csv.TypeConverters
+namespace Infrastructure.Persistence.Csv.TypeConverters
 {
     public class YesNoBooleanConverter : DefaultTypeConverter
     {

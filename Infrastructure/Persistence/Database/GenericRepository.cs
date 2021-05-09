@@ -3,13 +3,13 @@ using System.Linq;
 using Application.Interfaces;
 using Domain.Entities;
 
-namespace Infrastructure.Persistance
+namespace Infrastructure.Persistence.Database
 {
-    public class MoviesRepository<T> : IRepository<T> where T : BaseEntity
+    public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly MoviesContext context;
         
-        public MoviesRepository(MoviesContext context)
+        public GenericRepository(MoviesContext context)
         {
             this.context = context;
         }

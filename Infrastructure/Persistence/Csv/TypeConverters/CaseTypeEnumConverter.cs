@@ -5,7 +5,7 @@ using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Domain.Enumerations;
 
-namespace Infrastructure.Persistance.Csv.TypeConverters
+namespace Infrastructure.Persistence.Csv.TypeConverters
 {
     public class CaseTypeEnumConverter : DefaultTypeConverter
     {

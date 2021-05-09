@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Infrastructure.Persistance.Csv.Models;
+using Infrastructure.Persistence.Csv.Models;
 
-namespace Infrastructure.Persistance.Csv.Readers
+namespace Infrastructure.Persistence.Csv.Readers
 {
     public interface ICsvReader
     {

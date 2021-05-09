@@ -1,6 +1,6 @@
 using System;
 
-namespace Infrastructure.Persistance.Csv.Exceptions
+namespace Infrastructure.Persistence.Csv.Exceptions
 {
     public class CsvImportException : Exception
     {

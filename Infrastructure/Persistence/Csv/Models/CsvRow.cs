@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Domain.Enumerations;
 
-namespace Infrastructure.Persistance.Csv.Models
+namespace Infrastructure.Persistence.Csv.Models
 {
     public class CsvRow
     {
@@ -28,7 +28,7 @@ namespace Infrastructure.Persistance.Csv.Models
         public bool HasSlipCover { get; set; }
         public bool HasTwoSidedCover { get; set; }
         public bool HasHologram { get; set; }
-        public int? Id { get; set; }
+        public string Id { get; set; }
         public string Barcode { get; set; }
         public string IMDBCode { get; set; }
         public int? CollectionId { get; set; }	

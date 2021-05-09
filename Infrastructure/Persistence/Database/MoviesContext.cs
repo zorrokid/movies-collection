@@ -2,7 +2,7 @@ using Domain.Entities;
 using Domain.Enumerations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistance
+namespace Infrastructure.Persistence
 {
     public class MoviesContext : DbContext
     {
@@ -10,12 +10,12 @@ namespace Infrastructure.Persistance
         
         public DbSet<Production> Productions { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<PersonRole> PersonRoles { get; set; }
+        public DbSet<ProductionPersonRole> PersonRoles { get; set; }
         public DbSet<CollectionStatus> CollectionStatuses { get; set; }
         public DbSet<ConditionClass> ConditionClasses { get; set; }
         public DbSet<CaseType> CaseTypes { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<CompanyRole> CompanyRoles { get; set; }
+        public DbSet<ProductionCompanyRole> CompanyRoles { get; set; }
         public DbSet<CompanyRoleType> CompanyRoleTypes { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<CoverLanguage> CoverLanguages { get; set; }
@@ -36,6 +36,8 @@ namespace Infrastructure.Persistance
             modelBuilder.Entity<CaseType>().HasData(CreateCaseTypes());
             modelBuilder.Entity<ProductionType>().HasData(CreateProductionTypes());
             modelBuilder.Entity<MediaType>().HasData(CreateMediaTypes());
+            modelBuilder.Entity<PersonRoleType>().HasData(CreatePersonRoleTypes());
+            modelBuilder.Entity<CompanyRoleType>().HasData(CreateCompanyRoleTypes());
         }
 
         #region seed data
@@ -214,6 +216,45 @@ namespace Infrastructure.Persistance
                 {
                     Id = (int) MediaTypeEnum.BluRay3D,
                     Name = "Blu-ray 3D"
+                }
+            };
+        }
+
+        private CompanyRoleType[] CreateCompanyRoleTypes()
+        {
+            return new CompanyRoleType[]
+            {
+                new CompanyRoleType
+                {
+                    Id = (int) CompanyRoleEnum.Publisher,
+                    Name = "Publisher"
+                }, 
+                new CompanyRoleType
+                {
+                    Id = (int) CompanyRoleEnum.Studio,
+                    Name = "Studio"
+                }
+            };
+        }
+
+        private PersonRoleType[] CreatePersonRoleTypes()
+        {
+            return new PersonRoleType[]
+            {
+                new PersonRoleType
+                {
+                    Id = (int) PersonRoleEnum.Director,
+                    Name = "Director"
+                },
+                new PersonRoleType
+                {
+                    Id = (int) PersonRoleEnum.Producer,
+                    Name = "Producer"
+                },
+                new PersonRoleType
+                {
+                    Id = (int) PersonRoleEnum.Writer,
+                    Name = "Writer"
                 }
             };
         }
