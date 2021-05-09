@@ -14,7 +14,9 @@ namespace Domain.Entities
         public bool IsVerified { get; set; }
         public string CountryCode { get; set; }
         public string Barcode { get; set; }
+        public int CaseTypeId { get; set; }
         public CaseType CaseType { get; set; }
+        public int ConditionClassId { get; set; }
         public ConditionClass ConditionClass { get; set; }
         public bool HasSlipCover { get; set; }
         public bool HasHologram { get; set; }
@@ -22,8 +24,9 @@ namespace Domain.Entities
         public string Notes { get; set; }
         public bool HasTwoSidedCover { get; set; }
         public bool HasBooklet { get; set; }
-        public Company Publisher { get; set; }
+        public List<PublicationCompanyRole> PublicationCompanyRoles { get; } = new List<PublicationCompanyRole>();
         public int ImportOriginId { get; set; }
+        public string IdInImportOrigin { get; set; }
         public List<PublicationItem> PublicationItems {get; } = new List<PublicationItem>();
         public List<CoverLanguage> CoverLanguages { get; } = new List<CoverLanguage>();
     }

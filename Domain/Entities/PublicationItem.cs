@@ -8,11 +8,13 @@ namespace Domain.Entities
     /// </summary>
     public class PublicationItem : BaseEntity
     {
+        public int PublicationId { get; set; }
         public Publication Publication { get; set; }
+
+        public int ProductionId { get; set; }
         public Production Production { get; set; }
         public string Title { get; set; }
         public List<MediaItem> MediaItems { get; } = new List<MediaItem>();
-        public int ImportOriginId { get; set; }
         public List<SubtitleLanguage> SubtitleLanguages { get; } = new List<SubtitleLanguage>();
 
     }

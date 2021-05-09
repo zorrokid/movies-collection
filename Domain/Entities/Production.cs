@@ -7,13 +7,12 @@ namespace Domain.Entities
     /// </summary>
     public class Production : BaseEntity
     {
+        public int ProductionTypeId { get; set; }
         public ProductionType ProductionType { get; set; }
         public string OriginalTitle { get; set; }
 
         public string CountryCode { get; set; }
-        public List<Person> Directors { get; } = new List<Person>();
-        public List<Person> Producers { get; } = new List<Person>();
-        public List<Person> Writers { get; } = new List<Person>();
-        public Company Studio { get; set; }
+        public List<ProductionPersonRole> PersonRoles { get; } = new List<ProductionPersonRole>();
+        public List<ProductionCompanyRole> ProductionCompanyRoles { get; } = new List<ProductionCompanyRole>();
     }
 }
