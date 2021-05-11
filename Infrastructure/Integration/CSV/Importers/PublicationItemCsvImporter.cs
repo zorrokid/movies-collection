@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Integration.CSV.Importers.MediaItemsStrategy;
 using Infrastructure.Integration.CSV.Models;
@@ -9,19 +8,10 @@ namespace Infrastructure.Integration.CSV.Importers
 {
     public class PublicationItemCsvImporter : AbstractCsvImporter, ICsvImporter
     {
-        private readonly IRepository<ProductionType> productionTypeRepository;
-        private readonly INamedEntityRepository<Person> personRepository;
-        private readonly IRepository<MediaType> mediaTypeRepository;
 
-        public PublicationItemCsvImporter(IPublicationRepository publicationRepository,
-            IRepository<ProductionType> productionTypeRepository,
-            INamedEntityRepository<Person> personRepository,
-            IRepository<MediaType> mediaTypeRepository) 
-            : base(publicationRepository)
+        public PublicationItemCsvImporter(IUnitOfWork unitOfWork) 
+            : base(unitOfWork)
         {
-            this.productionTypeRepository = productionTypeRepository;
-            this.personRepository = personRepository;
-            this.mediaTypeRepository = mediaTypeRepository;
         }
         
         public void Import(CsvRow csvRow)
@@ -46,7 +36,7 @@ namespace Infrastructure.Integration.CSV.Importers
             var publicationId = csvRow.CollectionId;
             if (publicationId != null)
             {
-                publication = publicationRepository.GetById((int)publicationId);
+                publication = unitOfWork.Publications.GetById((int)publicationId);
             }
             else
             {
@@ -57,18 +47,18 @@ namespace Infrastructure.Integration.CSV.Importers
 
         private Production GetProduction(CsvRow csvRow)
         {
-            var productionType = productionTypeRepository.GetById((int)csvRow.ProductionType); 
+            var productionType = unitOfWork.ProductionTypes.GetById((int)csvRow.ProductionType); 
 
             Company studio = null;
             
             if (!string.IsNullOrEmpty(csvRow.Studio)) 
             {
-                studio = publicationRepository.GetCompany(csvRow.Studio).FirstOrDefault();
+                studio = unitOfWork.Companies.GetByName(csvRow.Studio).FirstOrDefault();
 
                 if (studio == null)
                 {
                     studio = new Company { Name = csvRow.Studio };
-                    publicationRepository.AddCompany(studio);
+                    unitOfWork.Companies.Add(studio);
                 }
             }
 

@@ -1,5 +1,4 @@
 using System.Linq;
-using Application.Interfaces;
 using Domain.Entities;
 using Domain.Enumerations;
 using Infrastructure.Integration.CSV.Models;
@@ -8,15 +7,16 @@ namespace Infrastructure.Integration.CSV.Importers
 {
     public class AbstractCsvImporter
     {
-        protected readonly IPublicationRepository publicationRepository;
-        public AbstractCsvImporter(IPublicationRepository publicationRepository)
+        protected readonly IUnitOfWork unitOfWork;
+
+        public AbstractCsvImporter(IUnitOfWork unitOfWork)
         {
-            this.publicationRepository = publicationRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         protected Publication CreatePublication(CsvRow csvRow)
         {
-            var caseType = publicationRepository.GetCaseType(csvRow.CaseType);
+            var caseType = unitOfWork.CaseTypes.GetById((int)csvRow.CaseType);
 
             var publication = new Publication
             {
@@ -46,7 +46,7 @@ namespace Infrastructure.Integration.CSV.Importers
         private PublicationCompanyRole CreatePublicationCompanyRole(CsvRow csvRow)
         {
             var publisherName = csvRow.Publisher;
-            Company publisher = publicationRepository.GetCompany(csvRow.Publisher).FirstOrDefault();
+            Company publisher = unitOfWork.Companies.GetByName(csvRow.Publisher).FirstOrDefault();
             if (publisher == null)
             {
                 publisher = new Company
@@ -55,7 +55,7 @@ namespace Infrastructure.Integration.CSV.Importers
                 };
                 // publicationRepository.AddCompany(publisher);
             }
-            var publisherRole = publicationRepository.GetCompanyRoleType(CompanyRoleEnum.Publisher);
+            var publisherRole = unitOfWork.CompanyRoleTypes.GetById((int)CompanyRoleEnum.Publisher);
             var publicationCompanyRole = new PublicationCompanyRole
             {
                 Company = publisher,

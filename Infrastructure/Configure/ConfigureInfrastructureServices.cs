@@ -12,9 +12,7 @@ namespace Infrastructure.Configure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
-            services.AddTransient(typeof(INamedEntityRepository<>), typeof(NamedEntityRepository<>));
-            services.AddTransient<IPublicationRepository, PublicationRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             IConfiguration config = ConfigurationProvider.GetConfiguration();
 

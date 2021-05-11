@@ -1,6 +1,14 @@
+using Infrastructure.Persistence;
+using Infrastructure.Persistence.Database.Repositories;
+
 public interface IUnitOfWork
 {
-
+    PublicationRepository Publications { get; }
+    CaseTypeRepository CaseTypes { get; }
+    CompanyRoleTypeRepository CompanyRoleTypes { get; }
+    PublicationCompanyRoleRepository PublicationCompanyRoles { get; }
+    CompanyRepository Companies { get; }
+    ProductionTypeRepository ProductionTypes { get; }
 }
 
 /// <summary>
@@ -9,5 +17,22 @@ public interface IUnitOfWork
 /// </summary>
 public class UnitOfWork : IUnitOfWork
 {
-    
+    private readonly MoviesContext moviesContext;
+    public PublicationRepository Publications { get; private set;}
+    public CaseTypeRepository CaseTypes { get; private set;}
+    public CompanyRoleTypeRepository CompanyRoleTypes { get; private set;}
+    public PublicationCompanyRoleRepository PublicationCompanyRoles { get; private set;}
+    public CompanyRepository Companies { get; private set;}
+    public ProductionTypeRepository ProductionTypes { get; private set;}
+
+    public UnitOfWork(MoviesContext moviesContext)
+    {
+        this.moviesContext = moviesContext;
+        Publications = new PublicationRepository(moviesContext);
+        CaseTypes = new CaseTypeRepository(moviesContext);
+        CompanyRoleTypes = new CompanyRoleTypeRepository(moviesContext);
+        PublicationCompanyRoles = new PublicationCompanyRoleRepository(moviesContext);
+        Companies = new CompanyRepository(moviesContext);
+        ProductionTypes = new ProductionTypeRepository(moviesContext);
+    }
 }
