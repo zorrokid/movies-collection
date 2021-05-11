@@ -5,6 +5,7 @@ using Infrastructure.Integration;
 using Infrastructure.Integration.CSV.Readers;
 using Infrastructure.Configure;
 using Application.Configure;
+using Infrastructure.Integration.CSV.Configuration;
 
 namespace CsvImport
 {
@@ -34,7 +35,8 @@ namespace CsvImport
                 .AddScoped<IIntegration, Integration>()
                 .AddScoped<ICsvReader, PublicationCsvReader>()
                 .AddApplicationServices()
-                .AddInfrastructureServices();
+                .AddInfrastructureServices()
+                .AddIntegrationCsvServices();
 
             serviceProvider = services.BuildServiceProvider(true);
         }
