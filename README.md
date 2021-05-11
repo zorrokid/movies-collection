@@ -1,61 +1,59 @@
-# Launching API
+# Building project
 
-Launch Movie API
+To build the project run in the root folder
 
-Go to MoviesAPI-project folder and run
+    dotnet build
+
+# Database
+
+Currently the database is PostgreSQL database. 
+
+## Connection
+
+Connection string is defined in MovieAPI-project's appsettings.json file.
+
+## Creating database
+
+TODO
+
+## Running migrations
+
+From the project root-folder run:
+
+    dotnet ef database update --startup-project ./MovieAPI/ --project ./Infrastructure/
+
+## Adding migrations
+
+From the project root-folder run:
+
+    dotnet ef migrations add <migration name> --startup-project ./MovieAPI/ --project ./Infrastructure/ -- --environment Development
+
+## Removing migrations
+
+To remove last migration
+
+    dotnet ef migrations remove
+
+To remove all migrations
+
+    dotnet ef database update 0 --startup-project ./MovieAPI/ --project ./Infrastructure/
+
+# Integrations
+
+## Import from CSV
+
+Currently a custom CSV-format is supported. Use CsvImport-project to import collection from CSV.
+
+TODO
+
+# API
+
+## Launching API
+
+To launch API go to MoviesAPI-project folder and run
 
     dotnet run
 
 Swagger is started in following address: https://localhost:5001/swagger/index.html
 
 TODO: certificate problem on running localhost
-
-# Using CsvImport
-
-Currently the database is Sqlite database. Migrations create the database in the Infrastucture-project and CsvImport must be run from the same directory where the movies.db database is (in Infrastructure-project root folder).
-
-# dotnet memo
-
-## Creating new project
-
-    $ dotnet new console
-    Getting ready...
-    The template "Console Application" was created successfully.
-
-    Processing post-creation actions...
-    Running 'dotnet restore' on /home/mikko/dev/dotnet/movies/CsvImport/CsvImport.csproj...
-    Determining projects to restore...
-    Restored /home/mikko/dev/dotnet/movies/CsvImport/CsvImport.csproj (in 56 ms).
-    Restore succeeded.
-
-## Adding nuget-package to project
-
-    $ dotnet add package Microsoft.Extensions.DependencyInjection
-
-## Adding project to solution
-
-    $ dotnet sln add CsvImport/CsvImport.csproj 
-    Project `CsvImport/CsvImport.csproj` added to the solution.
-
-## Referecing library project to another project
-
-    $ dotnet add CsvImport/CsvImport.csproj reference Application/Application.csproj 
-    Reference `..\Application\Application.csproj` added to the project.
-
-## Building project
-
-    $ dotnet build
-    Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET
-    Copyright (C) Microsoft Corporation. All rights reserved.
-
-    Determining projects to restore...
-    All projects are up-to-date for restore.
-    CsvImport -> /home/mikko/dev/dotnet/movies/CsvImport/bin/Debug/net5.0/CsvImport.dll
-
-    Build succeeded.
-        0 Warning(s)
-        0 Error(s)
-
-## Running project
-
-    $ dotnet run
