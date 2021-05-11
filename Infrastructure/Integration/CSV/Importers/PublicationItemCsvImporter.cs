@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Application.Extensions;
 using Application.Interfaces;
 using Domain.Entities;
+using Infrastructure.Integration.CSV.Importers.MediaItemsStrategy;
 using Infrastructure.Integration.CSV.Models;
 
 namespace Infrastructure.Integration.CSV.Importers
@@ -36,15 +36,8 @@ namespace Infrastructure.Integration.CSV.Importers
 
         private List<MediaItem> GetMediaItems(CsvRow csvRow)
         {
-            var mediaItems = new List<MediaItem>();
-            if (csvRow.MediaType.Length == csvRow.Discs)
-            {
-                // mediaItems = csvRow.MediaType.Select(mt => new MediaItem
-                // {
-                //     MediaType = 
-                // }).ToList();
-            }
-            return mediaItems;
+            var strategy = MediaItemsStrategyFactory.GetStrategy(csvRow);
+            return strategy.Create(csvRow);
         }
 
         private Publication GetPublication(CsvRow csvRow)
