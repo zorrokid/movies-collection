@@ -5,7 +5,7 @@ using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Domain.Enumerations;
 
-namespace Infrastructure.Persistence.Csv.TypeConverters
+namespace Infrastructure.Integration.CSV.TypeConverters
 {
     public class ConditionClassEnumConverter : DefaultTypeConverter
     {

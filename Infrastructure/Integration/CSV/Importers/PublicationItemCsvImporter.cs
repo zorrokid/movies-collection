@@ -3,9 +3,9 @@ using System.Linq;
 using Application.Extensions;
 using Application.Interfaces;
 using Domain.Entities;
-using Infrastructure.Persistence.Csv.Models;
+using Infrastructure.Integration.CSV.Models;
 
-namespace Infrastructure.Persistence.Csv.Importers
+namespace Infrastructure.Integration.CSV.Importers
 {
     public class PublicationItemCsvImporter : AbstractCsvImporter, ICsvImporter
     {

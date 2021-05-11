@@ -3,7 +3,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 
-namespace Infrastructure.Persistence.Csv.TypeConverters
+namespace Infrastructure.Integration.CSV.TypeConverters
 {
     public class CharSeparatedListConverter : DefaultTypeConverter
     {

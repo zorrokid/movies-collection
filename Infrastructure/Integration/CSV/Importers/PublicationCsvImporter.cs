@@ -1,9 +1,9 @@
 using System;
 using Application.Interfaces;
 using Domain.Enumerations;
-using Infrastructure.Persistence.Csv.Models;
+using Infrastructure.Integration.CSV.Models;
 
-namespace Infrastructure.Persistence.Csv.Importers
+namespace Infrastructure.Integration.CSV.Importers
 {
     public class PublicationCsvImporter : AbstractCsvImporter, ICsvImporter
     {

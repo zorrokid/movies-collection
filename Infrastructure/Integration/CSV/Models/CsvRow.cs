@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Domain.Enumerations;
 
-namespace Infrastructure.Persistence.Csv.Models
+namespace Infrastructure.Integration.CSV.Models
 {
     public class CsvRow
     {

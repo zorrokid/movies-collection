@@ -3,7 +3,7 @@ using Application.Interfaces;
 using Domain.Entities;
 using Domain.Enumerations;
 
-namespace Infrastructure.Persistence.Csv.Importers
+namespace Infrastructure.Integration.CSV.Importers
 {
     public class CompanyRoleFactory<T> where T : BaseEntity, new()
     {

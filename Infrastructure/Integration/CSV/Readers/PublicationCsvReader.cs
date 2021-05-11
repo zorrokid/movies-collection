@@ -3,11 +3,11 @@ using System.Globalization;
 using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Infrastructure.Persistence.Csv.Importers;
-using Infrastructure.Persistence.Csv.Models;
-using Infrastructure.Persistence.Csv.RowMaps;
+using Infrastructure.Integration.CSV.Importers;
+using Infrastructure.Integration.CSV.Models;
+using Infrastructure.Integration.CSV.RowMaps;
 
-namespace Infrastructure.Persistence.Csv.Readers
+namespace Infrastructure.Integration.CSV.Readers
 {
     public class PublicationCsvReader : ICsvReader
     {

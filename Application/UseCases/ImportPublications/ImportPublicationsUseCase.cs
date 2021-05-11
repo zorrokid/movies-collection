@@ -9,17 +9,16 @@ namespace Application.UseCases.ImportCsv
 
     public class ImportPublicationsUseCase : IImportPublicationsUseCase
     {
-        private readonly IIntegration integrarion;
+        private readonly IIntegration integration;
 
-        public ImportPublicationsUseCase(IIntegration integrarion)
+        public ImportPublicationsUseCase(IIntegration integration)
         {
-            this.integrarion = integrarion;
+            this.integration = integration;
         }
 
         public void Import(string publicationsResourcePath)
         {
-
-            integrarion.ImportPublications(publicationsResourcePath);
+            integration.ImportPublications(publicationsResourcePath);
         }
     }
 }

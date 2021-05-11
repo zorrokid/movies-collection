@@ -1,5 +1,5 @@
 using Application.Interfaces;
-using Infrastructure.Persistence.Csv.Readers;
+using Infrastructure.Integration.CSV.Readers;
 
 namespace Infrastructure.Integration
 {
@@ -12,7 +12,7 @@ namespace Infrastructure.Integration
             this.reader = reader;
         }
         
-        public void ImportPublicationItemss(string resourcePath)
+        public void ImportPublicationItems(string resourcePath)
         {
             throw new System.NotImplementedException();
         }
