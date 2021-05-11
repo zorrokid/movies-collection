@@ -14,16 +14,8 @@ namespace Infrastructure.Configure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
-            //services.AddDbContext<MoviesContext>(options => options.UseSqlite("Data Source=movies.db"));
 
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-            IConfiguration config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environment}.json", optional: true)
-                .AddEnvironmentVariables()
-                .Build();
+            IConfiguration config = ConfigurationProvider.GetConfiguration();
 
             var connectionString = config.GetConnectionString(nameof(MoviesContext));
             if (connectionString == null)
