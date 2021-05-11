@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using Application.Interfaces;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Database;

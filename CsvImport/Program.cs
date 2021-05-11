@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Application;
-using Infrastructure;
 using Application.Interfaces;
 using Infrastructure.Integration;
-using Infrastructure.Persistence.Csv.Readers;
+using Infrastructure.Integration.CSV.Readers;
+using Infrastructure.Configure;
+using Application.Configure;
 
 namespace CsvImport
 {

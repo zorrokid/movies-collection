@@ -2,7 +2,7 @@
 using Application.UseCases.ImportCsv;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application
+namespace Application.Configure
 {
     public static class ConfigureApplicationServices
     {
