@@ -1,5 +1,4 @@
 using System;
-using Application.Interfaces;
 using Domain.Enumerations;
 using Infrastructure.Integration.CSV.Models;
 

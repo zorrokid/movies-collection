@@ -3,7 +3,7 @@ using System.Linq;
 using Application.Interfaces;
 using Domain.Entities;
 
-namespace Infrastructure.Persistence.Database
+namespace Infrastructure.Persistence.Database.Repositories
 {
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {

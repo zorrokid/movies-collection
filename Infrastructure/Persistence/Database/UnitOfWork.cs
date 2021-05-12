@@ -17,13 +17,13 @@ public interface IUnitOfWork
 /// </summary>
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly MoviesContext moviesContext;
     public PublicationRepository Publications { get; private set;}
     public CaseTypeRepository CaseTypes { get; private set;}
     public CompanyRoleTypeRepository CompanyRoleTypes { get; private set;}
     public PublicationCompanyRoleRepository PublicationCompanyRoles { get; private set;}
     public CompanyRepository Companies { get; private set;}
     public ProductionTypeRepository ProductionTypes { get; private set;}
+    private readonly MoviesContext moviesContext;
 
     public UnitOfWork(MoviesContext moviesContext)
     {
