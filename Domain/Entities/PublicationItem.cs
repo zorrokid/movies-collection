@@ -16,6 +16,7 @@ namespace Domain.Entities
         public string Title { get; set; }
         public List<MediaItem> MediaItems { get; } = new List<MediaItem>();
         public List<SubtitleLanguage> SubtitleLanguages { get; } = new List<SubtitleLanguage>();
+        public List<SpokenLanguage> SpokenLanguages { get; } = new List<SpokenLanguage>();
 
     }
 }
