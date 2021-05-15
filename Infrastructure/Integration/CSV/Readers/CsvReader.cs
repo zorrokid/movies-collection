@@ -4,6 +4,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Infrastructure.Integration.CSV.Importers;
 using Infrastructure.Integration.CSV.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Integration.CSV.Readers
 {
@@ -11,14 +12,17 @@ namespace Infrastructure.Integration.CSV.Readers
         where TClassMap : ClassMap<CsvRow>
     {
         private readonly ICsvImporter<TRowModel> csvImporter;
+        private readonly ILogger<CsvReader<TClassMap, TRowModel>> logger;
 
-        public CsvReader(ICsvImporter<TRowModel> csvImporter)
+        public CsvReader(ICsvImporter<TRowModel> csvImporter, ILogger<CsvReader<TClassMap, TRowModel>> logger)
         {
             this.csvImporter = csvImporter;
+            this.logger = logger;
         }
 
         public void ReadCsv(string filePath, string delimiter)
         {   
+            logger.LogInformation($"Reading csv from file {filePath}");
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 Delimiter = delimiter
@@ -30,7 +34,8 @@ namespace Infrastructure.Integration.CSV.Readers
                 var records = csv.GetRecords<TRowModel>();
                 foreach (var record in records)
                 {
-                   csvImporter.Import(record);
+                    logger.LogTrace($"Importing record {record}");
+                    csvImporter.Import(record);
                 }            
             }
         }
