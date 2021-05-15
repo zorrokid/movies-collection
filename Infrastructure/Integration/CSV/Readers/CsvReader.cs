@@ -36,7 +36,8 @@ namespace Infrastructure.Integration.CSV.Readers
                 {
                     logger.LogTrace($"Importing record {record}");
                     csvImporter.Import(record);
-                }            
+                }
+                csvImporter.Complete();
             }
         }
     }

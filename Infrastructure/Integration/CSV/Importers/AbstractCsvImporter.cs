@@ -2,21 +2,26 @@ using System.Linq;
 using Domain.Entities;
 using Domain.Enumerations;
 using Infrastructure.Integration.CSV.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Integration.CSV.Importers
 {
     public class AbstractCsvImporter
     {
         protected readonly IUnitOfWork unitOfWork;
+        protected readonly ILogger<AbstractCsvImporter> logger;
 
-        public AbstractCsvImporter(IUnitOfWork unitOfWork)
+        public AbstractCsvImporter(IUnitOfWork unitOfWork, ILogger<AbstractCsvImporter> logger)
         {
             this.unitOfWork = unitOfWork;
+            this.logger = logger;
         }
 
         protected Publication CreatePublication(CsvRow csvRow)
         {
             var caseType = unitOfWork.CaseTypes.GetById((int)csvRow.CaseType);
+
+            logger.LogInformation($"Got case type {caseType} from db");
 
             var publication = new Publication
             {
@@ -62,6 +67,11 @@ namespace Infrastructure.Integration.CSV.Importers
                 Role = publisherRole
             };
             return publicationCompanyRole;
+        }
+
+        public void Complete()
+        {
+            unitOfWork.SaveChanges();
         }
     }
 }

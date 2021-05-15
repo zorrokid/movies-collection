@@ -1,13 +1,13 @@
-using System;
 using Domain.Enumerations;
 using Infrastructure.Integration.CSV.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Integration.CSV.Importers
 {
     public class PublicationCsvImporter : AbstractCsvImporter, ICsvImporter<CsvRow>
     {
-        public PublicationCsvImporter(IUnitOfWork unitOfWork) 
-            : base(unitOfWork)
+        public PublicationCsvImporter(IUnitOfWork unitOfWork, ILogger<PublicationCsvImporter> logger) 
+            : base(unitOfWork, logger)
         {
         }
 
@@ -15,11 +15,11 @@ namespace Infrastructure.Integration.CSV.Importers
         {
             if (unitOfWork.Publications.GetPublicationByImportOriginId((int)ImportOriginEnum.CustomCsv, csvRow.Id) != null)
             {
-                Console.WriteLine($"Publication with id {csvRow.Id} already imported - skipping.");
+                logger.LogWarning($"Publication with id {csvRow.Id} already imported - skipping.");
                 return;
             }
             var publication = CreatePublication(csvRow);
-            unitOfWork.Publications.Add(publication);           
+            unitOfWork.Publications.Add(publication);
         }
     }
 }

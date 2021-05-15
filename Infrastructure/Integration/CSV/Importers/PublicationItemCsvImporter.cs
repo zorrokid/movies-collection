@@ -3,25 +3,30 @@ using System.Linq;
 using Domain.Entities;
 using Infrastructure.Integration.CSV.Importers.MediaItemsStrategy;
 using Infrastructure.Integration.CSV.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Integration.CSV.Importers
 {
     public class PublicationItemCsvImporter : AbstractCsvImporter, ICsvImporter<CsvRow>
     {
 
-        public PublicationItemCsvImporter(IUnitOfWork unitOfWork) 
-            : base(unitOfWork)
+        public PublicationItemCsvImporter(IUnitOfWork unitOfWork, ILogger<PublicationItemCsvImporter> logger) 
+            : base(unitOfWork, logger)
         {
         }
         
         public void Import(CsvRow csvRow)
         {
+            logger.LogInformation($"Importing {csvRow}");
+            var publication = GetPublication(csvRow);
             var publicationItem = new PublicationItem
             {
-                Publication = GetPublication(csvRow),
                 Production = GetProduction(csvRow)
             };
             publicationItem.MediaItems.AddRange(GetMediaItems(csvRow));
+            publication.PublicationItems.Add(publicationItem);
+            logger.LogInformation($"Created publication item {publicationItem}");
+            unitOfWork.Publications.Add(publication);
         }
 
         private List<MediaItem> GetMediaItems(CsvRow csvRow)
@@ -48,15 +53,18 @@ namespace Infrastructure.Integration.CSV.Importers
         private Production GetProduction(CsvRow csvRow)
         {
             var productionType = unitOfWork.ProductionTypes.GetById((int)csvRow.ProductionType); 
+            logger.LogInformation($"Got production type {productionType} from db");
 
             Company studio = null;
             
             if (!string.IsNullOrEmpty(csvRow.Studio)) 
             {
-                studio = unitOfWork.Companies.GetByName(csvRow.Studio).FirstOrDefault();
+                studio = unitOfWork.Companies.GetByName(csvRow.Studio).FirstOrDefault(); 
+                logger.LogInformation($"Got company {studio} from db");
 
                 if (studio == null)
                 {
+                    logger.LogInformation($"Create new company {csvRow.Studio}");
                     studio = new Company { Name = csvRow.Studio };
                     unitOfWork.Companies.Add(studio);
                 }

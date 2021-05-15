@@ -9,6 +9,7 @@ public interface IUnitOfWork
     PublicationCompanyRoleRepository PublicationCompanyRoles { get; }
     CompanyRepository Companies { get; }
     ProductionTypeRepository ProductionTypes { get; }
+    void SaveChanges();
 }
 
 /// <summary>
@@ -34,5 +35,10 @@ public class UnitOfWork : IUnitOfWork
         PublicationCompanyRoles = new PublicationCompanyRoleRepository(moviesContext);
         Companies = new CompanyRepository(moviesContext);
         ProductionTypes = new ProductionTypeRepository(moviesContext);
+    }
+
+    public void SaveChanges()
+    {
+        moviesContext.SaveChanges();
     }
 }
