@@ -47,6 +47,11 @@ namespace Infrastructure.Persistence
             {
                 new CollectionStatus
                 {
+                    Id = (int) CollectionStatusEnum.Undefined,
+                    Name = "Undefined"
+                },
+                new CollectionStatus
+                {
                     Id = (int) CollectionStatusEnum.Collection,
                     Name = "Collection item"
                 },
@@ -72,6 +77,11 @@ namespace Infrastructure.Persistence
         {
             return new ConditionClass[] 
             {
+                new ConditionClass
+                {
+                    Id = (int) ConditionClassEnum.Undefined,
+                    Name = "Undefined"
+                },
                 new ConditionClass
                 {
                     Id = (int) ConditionClassEnum.New,
@@ -108,6 +118,11 @@ namespace Infrastructure.Persistence
         {
             return new CaseType[]
             {
+                new CaseType
+                {
+                    Id = (int) CaseTypeEnum.Undefined,
+                    Name = "Undefined"
+                },
                 new CaseType
                 {
                     Id = (int) CaseTypeEnum.KeepCase,
@@ -155,6 +170,11 @@ namespace Infrastructure.Persistence
         {
             return new ProductionType[]
             {
+                new ProductionType
+                {
+                    Id = (int) ProductionTypeEnum.Undefined,
+                    Name = "Undefined"
+                },
                 new ProductionType
                 {
                     Id = (int) ProductionTypeEnum.Movie,
