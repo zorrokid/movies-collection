@@ -25,7 +25,7 @@ namespace CsvImport
 
         private static void InitAndRun(Options options)
         { 
-            var importMode = ImportModeEnum.PublicationItem;
+            var importMode = options.ImportMode;
 
             using var loggerFactory = LoggerFactory.Create(builder => {
                 builder
