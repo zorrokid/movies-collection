@@ -6,7 +6,5 @@ namespace Domain.Entities
     {
         public string GivenName { get; set; }
         public string Surname { get; set; }
-
-        public List<Production> Productions { get; } = new List<Production>();
     }
 }
