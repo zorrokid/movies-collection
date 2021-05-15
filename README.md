@@ -42,17 +42,17 @@ To remove all migrations
 
 ## Import from CSV
 
-Currently a custom CSV-format is supported. Use CsvImport-project to import collection from CSV.
-
-TODO
+Currently only a custom CSV-format is supported. Use CsvImport-project to import collection from CSV.
 
 Run build
 
     dotnet build
 
-To use appsettings.json from MovieAPI run CsvImport from MovieAPI-project folder:
+Run CsvImport to get help about command line options.
 
-    $ ../CsvImport/bin/Debug/net5.0/CsvImport ../CsvImport/data/Collection.csv
+Example:
+
+    $ bin/Debug/net5.0/CsvImport -p data/Collections.csv -c /home/mikko/dev/dotnet/movies/MovieAPI/ -m 1
 
 # API
 
