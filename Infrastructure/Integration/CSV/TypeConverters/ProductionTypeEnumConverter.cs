@@ -12,10 +12,10 @@ namespace Infrastructure.Integration.CSV.TypeConverters
     {
         private static Dictionary<String, ProductionTypeEnum> EnumStringMap = new Dictionary<String, ProductionTypeEnum>
         {
-            { "Movie", ProductionTypeEnum.Movie },
-            { "Documentary", ProductionTypeEnum.Document },
-            { "TV Serie", ProductionTypeEnum.TvSerie },
-            { "Music", ProductionTypeEnum.Music }
+            { "movie", ProductionTypeEnum.Movie },
+            { "documentary", ProductionTypeEnum.Document },
+            { "tv Serie", ProductionTypeEnum.TvSerie },
+            { "music", ProductionTypeEnum.Music }
         };
 
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
