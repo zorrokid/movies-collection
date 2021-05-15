@@ -28,7 +28,16 @@ namespace Infrastructure.Integration.CSV.Importers
             publicationItem.MediaItems.AddRange(GetMediaItems(csvRow));
             publication.PublicationItems.Add(publicationItem);
             logger.LogInformation($"Created publication item {publicationItem}");
-            unitOfWork.Publications.Add(publication);
+            if (publication.Id == 0)
+            {
+                logger.LogInformation($"Adding publication item {publicationItem} to db.");
+                unitOfWork.Publications.Add(publication);
+            }
+            else
+            {
+                logger.LogInformation($"Updating publication item {publicationItem.Id} to db.");
+                unitOfWork.Publications.Update(publication);
+            }
         }
 
         private List<MediaItem> GetMediaItems(CsvRow csvRow)
