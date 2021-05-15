@@ -1,7 +1,5 @@
 using System;
-using Application.Interfaces;
 using Infrastructure.Persistence;
-using Infrastructure.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

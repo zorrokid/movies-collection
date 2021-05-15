@@ -52,8 +52,6 @@ namespace CsvImport
         {
             var services = new ServiceCollection()
                 .AddScoped<ICsvImportClient, CsvImportClient>()
-                .AddScoped<IIntegration, Integration>()
-                .AddScoped<ICsvReader, PublicationCsvReader>()
                 .AddSingleton<ILogger>(logger)
                 .AddLogging(config => config.AddConsole())
                 .AddApplicationServices()

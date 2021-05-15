@@ -4,7 +4,7 @@ using Infrastructure.Integration.CSV.Models;
 
 namespace Infrastructure.Integration.CSV.Importers
 {
-    public class PublicationCsvImporter : AbstractCsvImporter, ICsvImporter
+    public class PublicationCsvImporter : AbstractCsvImporter, ICsvImporter<CsvRow>
     {
         public PublicationCsvImporter(IUnitOfWork unitOfWork) 
             : base(unitOfWork)

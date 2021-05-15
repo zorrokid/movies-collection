@@ -1,38 +1,36 @@
-using System;
 using System.Globalization;
 using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Infrastructure.Integration.CSV.Importers;
 using Infrastructure.Integration.CSV.Models;
-using Infrastructure.Integration.CSV.RowMaps;
 
 namespace Infrastructure.Integration.CSV.Readers
 {
-    public class PublicationCsvReader : ICsvReader
+    public class CsvReader<TClassMap, TRowModel> : ICsvReader
+        where TClassMap : ClassMap<CsvRow>
     {
-        private readonly ICsvImporter csvImporter;
+        private readonly ICsvImporter<TRowModel> csvImporter;
 
-        public PublicationCsvReader(ICsvImporter csvImporter)
+        public CsvReader(ICsvImporter<TRowModel> csvImporter)
         {
             this.csvImporter = csvImporter;
         }
 
-        public void ReadCsv(string filePath)
+        public void ReadCsv(string filePath, string delimiter)
         {   
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                Delimiter = ","
+                Delimiter = delimiter
             };
             using (var reader = new StreamReader(filePath))
             using (var csv = new CsvReader(reader, config))
             {
-                csv.Context.RegisterClassMap<PublicationCsvRowMap>();
-                var records = csv.GetRecords<CsvRow>();
+                csv.Context.RegisterClassMap<TClassMap>();
+                var records = csv.GetRecords<TRowModel>();
                 foreach (var record in records)
                 {
-                    Console.WriteLine(record.OriginalTitle);
-                    csvImporter.Import(record);
+                   csvImporter.Import(record);
                 }            
             }
         }

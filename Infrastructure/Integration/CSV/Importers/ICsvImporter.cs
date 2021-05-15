@@ -2,8 +2,8 @@ using Infrastructure.Integration.CSV.Models;
 
 namespace Infrastructure.Integration.CSV.Importers
 {
-    public interface ICsvImporter
+    public interface ICsvImporter<TRowModel>
     {
-         void Import(CsvRow csvRow);
+         void Import(TRowModel csvRow);
     }
 }

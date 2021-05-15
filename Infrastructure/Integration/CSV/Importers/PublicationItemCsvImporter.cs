@@ -6,7 +6,7 @@ using Infrastructure.Integration.CSV.Models;
 
 namespace Infrastructure.Integration.CSV.Importers
 {
-    public class PublicationItemCsvImporter : AbstractCsvImporter, ICsvImporter
+    public class PublicationItemCsvImporter : AbstractCsvImporter, ICsvImporter<CsvRow>
     {
 
         public PublicationItemCsvImporter(IUnitOfWork unitOfWork) 
