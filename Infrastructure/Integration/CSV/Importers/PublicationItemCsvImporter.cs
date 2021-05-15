@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Domain.Entities;
+using Domain.Enumerations;
+using Infrastructure.Integration.CSV.Exceptions;
 using Infrastructure.Integration.CSV.Importers.MediaItemsStrategy;
 using Infrastructure.Integration.CSV.Models;
 using Microsoft.Extensions.Logging;
@@ -39,22 +41,24 @@ namespace Infrastructure.Integration.CSV.Importers
         {
             Publication publication = null;
             var publicationId = csvRow.CollectionId;
-            if (publicationId != null)
+            if (!string.IsNullOrEmpty(publicationId))
             {
-                publication = unitOfWork.Publications.GetById((int)publicationId);
+                logger.LogInformation($"Trying to find publication with id {csvRow.CollectionId}");
+                publication = unitOfWork.Publications.GetByImportOrigin((int) ImportOriginEnum.CustomCsv, publicationId);
             }
             else
             {
                 publication = CreatePublication(csvRow);
+            }
+            if (publication == null)
+            {
+                throw new CsvImportException("Failed geting/creating publication.");
             }
             return publication;
         }
 
         private Production GetProduction(CsvRow csvRow)
         {
-            var productionType = unitOfWork.ProductionTypes.GetById((int)csvRow.ProductionType); 
-            logger.LogInformation($"Got production type {productionType.Id} {productionType.Name} from db");
-
             Company studio = null;
             
             if (!string.IsNullOrEmpty(csvRow.Studio)) 
@@ -72,7 +76,7 @@ namespace Infrastructure.Integration.CSV.Importers
 
             var production = new Production
             {
-                ProductionType = productionType,
+                ProductionTypeId = (int)csvRow.ProductionType,
                 OriginalTitle = csvRow.OriginalTitle
             };
 

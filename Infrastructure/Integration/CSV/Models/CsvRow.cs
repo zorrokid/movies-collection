@@ -31,7 +31,7 @@ namespace Infrastructure.Integration.CSV.Models
         public string Id { get; set; }
         public string Barcode { get; set; }
         public string IMDBCode { get; set; }
-        public int? CollectionId { get; set; }	
+        public string CollectionId { get; set; }	
         public string Series { get; set; }
         public string Publisher { get; set; }	
         public string Studio { get; set; }	

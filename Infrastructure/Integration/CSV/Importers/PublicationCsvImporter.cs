@@ -13,7 +13,7 @@ namespace Infrastructure.Integration.CSV.Importers
 
         public void Import(CsvRow csvRow)
         {
-            if (unitOfWork.Publications.GetPublicationByImportOriginId((int)ImportOriginEnum.CustomCsv, csvRow.Id) != null)
+            if (unitOfWork.Publications.GetByImportOrigin((int)ImportOriginEnum.CustomCsv, csvRow.Id) != null)
             {
                 logger.LogWarning($"Publication with id {csvRow.Id} already imported - skipping.");
                 return;

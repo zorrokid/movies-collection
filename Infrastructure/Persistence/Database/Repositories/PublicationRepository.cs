@@ -8,11 +8,11 @@ namespace Infrastructure.Persistence.Database.Repositories
         public PublicationRepository(MoviesContext context) : base(context)
         {}
 
-        public Publication GetPublicationByImportOriginId(int importOriginId, string idInImportOrigin)
+        public Publication GetByImportOrigin(int importOriginId, string idInImportOrigin)
         {
            return context.Publications
-            .Where(p => p.ImportOriginId == importOriginId && p.IdInImportOrigin == idInImportOrigin)
-            .FirstOrDefault();
+                .Where(p => p.ImportOriginId == importOriginId && p.IdInImportOrigin == idInImportOrigin)
+                .FirstOrDefault();
         }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Infrastructure.Integration;
-using Infrastructure.Integration.CSV.Readers;
 using Infrastructure.Configure;
 using Infrastructure.Integration.CSV.Configuration;
 using Infrastructure.Integration.CSV.Enums;
 using Microsoft.Extensions.Logging;
-using Application.Interfaces;
 using Application.Configure;
 using CommandLine;
 
