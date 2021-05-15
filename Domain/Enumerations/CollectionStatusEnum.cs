@@ -2,7 +2,8 @@ namespace Domain.Enumerations
 {
     public enum CollectionStatusEnum
     {
-        Collection = 1,
+        Undefined = 1,
+        Collection,
         Trade,
         Want,
         PreviouslyOwned

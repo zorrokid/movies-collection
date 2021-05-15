@@ -2,7 +2,7 @@ namespace Domain.Enumerations
 {
     public enum ProductionTypeEnum
     {
-        Undefined = 0,
+        Undefined = 1,
         Movie,
         TvSerie,
         Document,

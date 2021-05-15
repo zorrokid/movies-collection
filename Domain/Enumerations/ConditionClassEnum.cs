@@ -2,7 +2,7 @@ namespace Domain.Enumerations
 {
     public enum ConditionClassEnum
     {
-        Undefined = 0,
+        Undefined = 1,
         New, // Still Wrapped
         Excellent,
         Good,
