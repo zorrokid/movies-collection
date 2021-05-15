@@ -10,6 +10,10 @@ namespace Infrastructure.Integration.CSV.TypeConverters
         const char separatorChar = ';';
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
+            // if (string.IsNullOrWhiteSpace(text))
+            // {
+            //     return new string[]{};
+            // }
             return text.Split(separatorChar, options: StringSplitOptions.TrimEntries);
         }
     }
