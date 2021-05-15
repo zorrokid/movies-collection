@@ -53,7 +53,7 @@ namespace Infrastructure.Integration.CSV.Importers
         private Production GetProduction(CsvRow csvRow)
         {
             var productionType = unitOfWork.ProductionTypes.GetById((int)csvRow.ProductionType); 
-            logger.LogInformation($"Got production type {productionType} from db");
+            logger.LogInformation($"Got production type {productionType.Id} {productionType.Name} from db");
 
             Company studio = null;
             

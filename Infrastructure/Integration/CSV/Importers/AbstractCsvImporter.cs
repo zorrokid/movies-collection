@@ -21,7 +21,7 @@ namespace Infrastructure.Integration.CSV.Importers
         {
             var caseType = unitOfWork.CaseTypes.GetById((int)csvRow.CaseType);
 
-            logger.LogInformation($"Got case type {caseType} from db");
+            logger.LogInformation($"Got case type {caseType.Id} {caseType.Name} from db");
 
             var publication = new Publication
             {
