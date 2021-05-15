@@ -10,11 +10,11 @@ namespace Infrastructure.Configure
 {
     public static class ConfigureInfrastructureServices
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string configPath = null)
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            IConfiguration config = ConfigurationProvider.GetConfiguration();
+            IConfiguration config = ConfigurationProvider.GetConfiguration(configPath);
 
             var connectionString = config.GetConnectionString(nameof(MoviesContext));
             if (connectionString == null)

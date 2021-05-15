@@ -6,12 +6,14 @@ namespace Infrastructure.Configure
 {
     public static class ConfigurationProvider
     {
-        public static IConfiguration GetConfiguration()
+        public static IConfiguration GetConfiguration(string configPath)
         {
             var environment = GetEnvironment();
 
+            var basePath = configPath ?? Directory.GetCurrentDirectory();
+
             IConfiguration config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(basePath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment}.json", optional: true)
                 .AddEnvironmentVariables()

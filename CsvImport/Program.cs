@@ -1,42 +1,64 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Application.Interfaces;
 using Infrastructure.Integration;
 using Infrastructure.Integration.CSV.Readers;
 using Infrastructure.Configure;
-using Application.Configure;
 using Infrastructure.Integration.CSV.Configuration;
+using Infrastructure.Integration.CSV.Enums;
+using Microsoft.Extensions.Logging;
+using Application.Interfaces;
+using Application.Configure;
+using CommandLine;
 
 namespace CsvImport
 {
-
     internal class Program
     {
         private static IServiceProvider serviceProvider;
 
         static void Main(string[] args)
         {
-            if (args.Length == 0) 
-            {
-                Console.WriteLine("Path to CSV-file must be provided");
-                return;
-            }
-            string filePath = args[0];
-            RegisterServices();
-            IServiceScope scope = serviceProvider.CreateScope();
-            scope.ServiceProvider.GetRequiredService<ICsvImportClient>().Import(filePath);
-            DisposeServices();
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed<Options>(o => 
+                {
+                    Console.WriteLine($"Import mode: {o.ImportMode}");
+                    InitAndRun(o);
+                });
         }
 
-        private static void RegisterServices()
+        private static void InitAndRun(Options options)
+        { 
+            var importMode = ImportModeEnum.PublicationItem;
+
+            using var loggerFactory = LoggerFactory.Create(builder => {
+                builder
+                    .AddFilter("Microsoft", LogLevel.Warning)
+                    .AddFilter("System", LogLevel.Warning)
+                    .AddFilter("CsvImport.Program", LogLevel.Debug)
+                    .AddConsole();
+            });
+            var logger = loggerFactory.CreateLogger<Program>();
+
+            logger.LogInformation($"Import mode is {importMode}");
+
+            RegisterServices(importMode, logger, options.ConfigPath);
+            IServiceScope scope = serviceProvider.CreateScope();
+            scope.ServiceProvider.GetRequiredService<ICsvImportClient>().Import(options.CsvFilePath);
+            DisposeServices();
+
+        }
+
+        private static void RegisterServices(ImportModeEnum importMode, ILogger logger, string configPath)
         {
             var services = new ServiceCollection()
                 .AddScoped<ICsvImportClient, CsvImportClient>()
                 .AddScoped<IIntegration, Integration>()
                 .AddScoped<ICsvReader, PublicationCsvReader>()
+                .AddSingleton<ILogger>(logger)
+                .AddLogging(config => config.AddConsole())
                 .AddApplicationServices()
-                .AddInfrastructureServices()
-                .AddIntegrationCsvServices();
+                .AddInfrastructureServices(configPath)
+                .AddIntegrationCsvServices(importMode);
 
             serviceProvider = services.BuildServiceProvider(true);
         }
