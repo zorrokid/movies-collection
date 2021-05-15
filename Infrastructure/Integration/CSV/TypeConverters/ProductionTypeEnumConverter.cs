@@ -20,6 +20,8 @@ namespace Infrastructure.Integration.CSV.TypeConverters
 
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
+            if (string.IsNullOrWhiteSpace(text)) return ProductionTypeEnum.Undefined;
+            
             string enumKey = text.Trim().ToLower();
             ProductionTypeEnum productionType;
             try
