@@ -19,7 +19,7 @@ namespace Infrastructure.Integration.CSV.Models
         public bool HasSubEn { get; set; }
         public string AspectRatio { get; set; }
         public int? RunningTime { get; set; }
-        public List<string> Directors { get; set; }
+        public string[] Directors { get; set; }
         public string Status { get; set; }
         public ConditionClassEnum Condition { get; set; }
         public string Notes { get; set; }
@@ -38,5 +38,10 @@ namespace Infrastructure.Integration.CSV.Models
         public bool HasLeaflet { get; set; }
         public bool HasSceneList { get; set; }
         public bool IsTwoSidedDisc { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {OriginalTitle}";
+        }
     }
 }
