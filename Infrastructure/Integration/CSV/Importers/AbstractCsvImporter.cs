@@ -19,10 +19,6 @@ namespace Infrastructure.Integration.CSV.Importers
 
         protected Publication CreatePublication(CsvRow csvRow)
         {
-            var caseType = unitOfWork.CaseTypes.GetById((int)csvRow.CaseType);
-
-            logger.LogInformation($"Got case type {caseType.Id} {caseType.Name} from db");
-
             var publication = new Publication
             {
                 ImportOriginId = (int)ImportOriginEnum.CustomCsv,
@@ -37,8 +33,9 @@ namespace Infrastructure.Integration.CSV.Importers
                 Notes = csvRow.Notes,
                 OriginalTitle = csvRow.OriginalTitle,
                 LocalTitle = csvRow.LocalTitle,
-                CaseType = caseType,
-                CountryCode = csvRow.Country
+                CaseTypeId = (int) csvRow.CaseType,
+                CountryCode = csvRow.Country,
+                ConditionClassId = (int) csvRow.Condition
             };
 
             if (csvRow.Publisher != null)
@@ -58,7 +55,6 @@ namespace Infrastructure.Integration.CSV.Importers
                 {
                     Name = publisherName
                 };
-                // publicationRepository.AddCompany(publisher);
             }
             var publisherRole = unitOfWork.CompanyRoleTypes.GetById((int)CompanyRoleEnum.Publisher);
             var publicationCompanyRole = new PublicationCompanyRole
