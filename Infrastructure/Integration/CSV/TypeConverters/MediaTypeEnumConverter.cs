@@ -13,13 +13,13 @@ namespace Infrastructure.Integration.CSV.TypeConverters
         
         private static Dictionary<String, MediaTypeEnum[]> EnumStringMap = new Dictionary<String, MediaTypeEnum[]>
         {
-            { "dvd", new MediaTypeEnum[] { MediaTypeEnum.DVD} },
-            { "dvd+cd", new MediaTypeEnum[] { MediaTypeEnum.DVD, MediaTypeEnum.CD } },
-            { "blu-ray", new MediaTypeEnum[] { MediaTypeEnum.BluRay } },
-            { "blu-ray+dvd", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.DVD } },
-            { "blu-ray 3D+blu-ray", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.BluRay3D } },
-            { "blu-ray 3D+blu-ray+dvd", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.BluRay3D, MediaTypeEnum.DVD } },
-            { "vhs", new MediaTypeEnum[] { MediaTypeEnum.VHS } }
+            { "DVD", new MediaTypeEnum[] { MediaTypeEnum.DVD} },
+            { "DVD+CD", new MediaTypeEnum[] { MediaTypeEnum.DVD, MediaTypeEnum.CD } },
+            { "Blu-Ray", new MediaTypeEnum[] { MediaTypeEnum.BluRay } },
+            { "Blu-Ray+DVD", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.DVD } },
+            { "Blu-Ray 3D+Blu-Ray", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.BluRay3D } },
+            { "Blu-Ray 3D+Blu-Ray+DVD", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.BluRay3D, MediaTypeEnum.DVD } },
+            { "VHS", new MediaTypeEnum[] { MediaTypeEnum.VHS } }
         };
 
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
