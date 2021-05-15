@@ -21,6 +21,11 @@ namespace Infrastructure.Integration.CSV.Importers
         {
             logger.LogInformation($"Importing {csvRow}");
             var publication = GetPublication(csvRow);
+            if (publication.PublicationItems.Count() > 0)
+            {
+                logger.LogWarning($"Publication {publication.Id} already imported, skipping.");
+                return;
+            }
             var publicationItem = new PublicationItem
             {
                 Production = GetProduction(csvRow)
