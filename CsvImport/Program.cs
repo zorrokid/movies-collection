@@ -25,8 +25,6 @@ namespace CsvImport
 
         private static void InitAndRun(Options options)
         { 
-            var importMode = options.ImportMode;
-
             using var loggerFactory = LoggerFactory.Create(builder => {
                 builder
                     .AddFilter("Microsoft", LogLevel.Warning)
@@ -36,9 +34,9 @@ namespace CsvImport
             });
             var logger = loggerFactory.CreateLogger<Program>();
 
-            logger.LogInformation($"Import mode is {importMode}");
+            logger.LogInformation($"Import mode is {options.ImportMode}");
 
-            RegisterServices(importMode, logger, options.ConfigPath);
+            RegisterServices(options.ImportMode, logger, options.ConfigPath);
             IServiceScope scope = serviceProvider.CreateScope();
             scope.ServiceProvider.GetRequiredService<ICsvImportClient>().Import(options.CsvFilePath);
             DisposeServices();
