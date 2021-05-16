@@ -1,3 +1,10 @@
+# Framework and library dependencies
+
+* .net 5
+* Entity Framework Core 5
+* Automapper
+* MediatR: https://github.com/jbogard/MediatR
+
 # Building project
 
 To build the project run in the root folder
@@ -14,7 +21,27 @@ Connection string is defined in MovieAPI-project's appsettings.json file.
 
 ## Creating database
 
-TODO
+Log in as postgres user:
+
+    $ sudo su postgres
+
+Create db user:
+
+    $ createuser --interactive --pwprompt
+    Enter name of role to add: movies
+    Enter password for new role: xxxxxxx
+    Enter it again: xxxxxxx
+    Shall the new role be a superuser? (y/n) n
+    Shall the new role be allowed to create databases? (y/n) n
+    Shall the new role be allowed to create more new roles? (y/n) n
+
+Create db with previously created user as owner:
+
+    $ createdb --owner=movies moviedb
+
+To login to db:
+
+    $ psql -Umovies -dmoviedb
 
 ## Running migrations
 
