@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -112,6 +112,21 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Persons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    GivenName = table.Column<string>(type: "text", nullable: true),
+                    Surname = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Persons", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductionTypes",
                 columns: table => new
                 {
@@ -135,16 +150,16 @@ namespace Infrastructure.Migrations
                     IsVerified = table.Column<bool>(type: "boolean", nullable: false),
                     CountryCode = table.Column<string>(type: "text", nullable: true),
                     Barcode = table.Column<string>(type: "text", nullable: true),
-                    CaseTypeId = table.Column<int>(type: "integer", nullable: true),
-                    ConditionClassId = table.Column<int>(type: "integer", nullable: true),
+                    CaseTypeId = table.Column<int>(type: "integer", nullable: false),
+                    ConditionClassId = table.Column<int>(type: "integer", nullable: false),
                     HasSlipCover = table.Column<bool>(type: "boolean", nullable: false),
                     HasHologram = table.Column<bool>(type: "boolean", nullable: false),
                     IsRental = table.Column<bool>(type: "boolean", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: true),
                     HasTwoSidedCover = table.Column<bool>(type: "boolean", nullable: false),
                     HasBooklet = table.Column<bool>(type: "boolean", nullable: false),
-                    PublisherId = table.Column<int>(type: "integer", nullable: true),
-                    ImportOriginId = table.Column<int>(type: "integer", nullable: false)
+                    ImportOriginId = table.Column<int>(type: "integer", nullable: false),
+                    IdInImportOrigin = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -154,19 +169,13 @@ namespace Infrastructure.Migrations
                         column: x => x.CaseTypeId,
                         principalTable: "CaseTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Publications_Companies_PublisherId",
-                        column: x => x.PublisherId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Publications_ConditionClasses_ConditionClassId",
                         column: x => x.ConditionClassId,
                         principalTable: "ConditionClasses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,26 +184,19 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProductionTypeId = table.Column<int>(type: "integer", nullable: true),
+                    ProductionTypeId = table.Column<int>(type: "integer", nullable: false),
                     OriginalTitle = table.Column<string>(type: "text", nullable: true),
-                    CountryCode = table.Column<string>(type: "text", nullable: true),
-                    StudioId = table.Column<int>(type: "integer", nullable: true)
+                    CountryCode = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Productions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Productions_Companies_StudioId",
-                        column: x => x.StudioId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Productions_ProductionTypes_ProductionTypeId",
                         column: x => x.ProductionTypeId,
                         principalTable: "ProductionTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,7 +205,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PublicationId = table.Column<int>(type: "integer", nullable: true),
+                    PublicationId = table.Column<int>(type: "integer", nullable: false),
                     LanguageCode = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -214,104 +216,41 @@ namespace Infrastructure.Migrations
                         column: x => x.PublicationId,
                         principalTable: "Publications",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Persons",
+                name: "PublicationCompanyRole",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    GivenName = table.Column<string>(type: "text", nullable: true),
-                    Surname = table.Column<string>(type: "text", nullable: true),
-                    FullName = table.Column<string>(type: "text", nullable: true),
-                    ProductionId = table.Column<int>(type: "integer", nullable: true),
-                    ProductionId1 = table.Column<int>(type: "integer", nullable: true),
-                    ProductionId2 = table.Column<int>(type: "integer", nullable: true)
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
+                    CompanyRoleTypeId = table.Column<int>(type: "integer", nullable: false),
+                    PublicationId = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persons", x => x.Id);
+                    table.PrimaryKey("PK_PublicationCompanyRole", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Persons_Productions_ProductionId",
-                        column: x => x.ProductionId,
-                        principalTable: "Productions",
+                        name: "FK_PublicationCompanyRole_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Persons_Productions_ProductionId1",
-                        column: x => x.ProductionId1,
-                        principalTable: "Productions",
+                        name: "FK_PublicationCompanyRole_CompanyRoleTypes_CompanyRoleTypeId",
+                        column: x => x.CompanyRoleTypeId,
+                        principalTable: "CompanyRoleTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Persons_Productions_ProductionId2",
-                        column: x => x.ProductionId2,
-                        principalTable: "Productions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PublicationItems",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PublicationId = table.Column<int>(type: "integer", nullable: true),
-                    ProductionId = table.Column<int>(type: "integer", nullable: true),
-                    Title = table.Column<string>(type: "text", nullable: true),
-                    ImportOriginId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PublicationItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PublicationItems_Productions_ProductionId",
-                        column: x => x.ProductionId,
-                        principalTable: "Productions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PublicationItems_Publications_PublicationId",
+                        name: "FK_PublicationCompanyRole_Publications_PublicationId",
                         column: x => x.PublicationId,
                         principalTable: "Publications",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PersonRoles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PersonId = table.Column<int>(type: "integer", nullable: true),
-                    RoleId = table.Column<int>(type: "integer", nullable: true),
-                    MovieId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonRoles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PersonRoles_PersonRoleTypes_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "PersonRoleTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PersonRoles_Persons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PersonRoles_Productions_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Productions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -320,9 +259,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CompanyId = table.Column<int>(type: "integer", nullable: true),
-                    RoleId = table.Column<int>(type: "integer", nullable: true),
-                    MovieId = table.Column<int>(type: "integer", nullable: true),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
+                    CompanyRoleTypeId = table.Column<int>(type: "integer", nullable: false),
+                    ProductionId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -333,19 +272,79 @@ namespace Infrastructure.Migrations
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CompanyRoles_CompanyRoleTypes_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_CompanyRoles_CompanyRoleTypes_CompanyRoleTypeId",
+                        column: x => x.CompanyRoleTypeId,
                         principalTable: "CompanyRoleTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CompanyRoles_PublicationItems_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "PublicationItems",
+                        name: "FK_CompanyRoles_Productions_ProductionId",
+                        column: x => x.ProductionId,
+                        principalTable: "Productions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonRoles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PersonId = table.Column<int>(type: "integer", nullable: false),
+                    PersonRoleTypeId = table.Column<int>(type: "integer", nullable: false),
+                    ProductionId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonRoles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonRoles_PersonRoleTypes_PersonRoleTypeId",
+                        column: x => x.PersonRoleTypeId,
+                        principalTable: "PersonRoleTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonRoles_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonRoles_Productions_ProductionId",
+                        column: x => x.ProductionId,
+                        principalTable: "Productions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PublicationItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PublicationId = table.Column<int>(type: "integer", nullable: false),
+                    ProductionId = table.Column<int>(type: "integer", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PublicationItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PublicationItems_Productions_ProductionId",
+                        column: x => x.ProductionId,
+                        principalTable: "Productions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PublicationItems_Publications_PublicationId",
+                        column: x => x.PublicationId,
+                        principalTable: "Publications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -354,24 +353,31 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PublicationItemId = table.Column<int>(type: "integer", nullable: true),
-                    MediaTypeId = table.Column<int>(type: "integer", nullable: true)
+                    PublicationItemId = table.Column<int>(type: "integer", nullable: false),
+                    MediaTypeId = table.Column<int>(type: "integer", nullable: false),
+                    ConditionClassId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MediaItems", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_MediaItems_ConditionClasses_ConditionClassId",
+                        column: x => x.ConditionClassId,
+                        principalTable: "ConditionClasses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_MediaItems_MediaTypes_MediaTypeId",
                         column: x => x.MediaTypeId,
                         principalTable: "MediaTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MediaItems_PublicationItems_PublicationItemId",
                         column: x => x.PublicationItemId,
                         principalTable: "PublicationItems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -380,7 +386,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PublicationItemId = table.Column<int>(type: "integer", nullable: true),
+                    PublicationItemId = table.Column<int>(type: "integer", nullable: false),
                     LanguageCode = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -391,7 +397,7 @@ namespace Infrastructure.Migrations
                         column: x => x.PublicationItemId,
                         principalTable: "PublicationItems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -400,7 +406,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PublicationItemId = table.Column<int>(type: "integer", nullable: true),
+                    PublicationItemId = table.Column<int>(type: "integer", nullable: false),
                     LanguageCode = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -411,7 +417,7 @@ namespace Infrastructure.Migrations
                         column: x => x.PublicationItemId,
                         principalTable: "PublicationItems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -419,14 +425,15 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Keep Case" },
-                    { 2, "Snapper Case" },
-                    { 3, "Digipack" },
-                    { 4, "Steelbook" },
-                    { 5, "Keep case (slim)" },
-                    { 6, "Mediabook" },
-                    { 7, "Cardboard box set" },
-                    { 8, "Special box set" }
+                    { 1, "Undefined" },
+                    { 2, "Keep Case" },
+                    { 3, "Snapper Case" },
+                    { 4, "Digipack" },
+                    { 5, "Steelbook" },
+                    { 6, "Keep case (slim)" },
+                    { 7, "Mediabook" },
+                    { 8, "Cardboard box set" },
+                    { 9, "Special box set" }
                 });
 
             migrationBuilder.InsertData(
@@ -434,10 +441,20 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Collection item" },
-                    { 4, "Previosly owned item" },
-                    { 2, "Trade item" },
-                    { 3, "Wanted item" }
+                    { 4, "Wanted item" },
+                    { 3, "Trade item" },
+                    { 1, "Undefined" },
+                    { 2, "Collection item" },
+                    { 5, "Previosly owned item" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CompanyRoleTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 2, "Publisher" },
+                    { 1, "Studio" }
                 });
 
             migrationBuilder.InsertData(
@@ -445,12 +462,13 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 6, "Bad" },
-                    { 5, "Poor" },
-                    { 4, "Fair" },
-                    { 3, "Good" },
-                    { 2, "Excellent" },
-                    { 1, "New" }
+                    { 6, "Poor" },
+                    { 7, "Bad" },
+                    { 5, "Fair" },
+                    { 3, "Excellent" },
+                    { 2, "New" },
+                    { 1, "Undefined" },
+                    { 4, "Good" }
                 });
 
             migrationBuilder.InsertData(
@@ -458,13 +476,23 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
+                    { 6, "CD" },
                     { 1, "DVD" },
                     { 2, "Blu-ray" },
                     { 3, "VHS" },
                     { 4, "4K Ultra HD" },
                     { 5, "HD DVD" },
-                    { 6, "CD" },
                     { 7, "Blu-ray 3D" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PersonRoleTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Director" },
+                    { 2, "Producer" },
+                    { 3, "Writer" }
                 });
 
             migrationBuilder.InsertData(
@@ -472,10 +500,11 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Movie" },
-                    { 2, "TV Serie" },
-                    { 3, "Document" },
-                    { 4, "Music" }
+                    { 3, "TV Serie" },
+                    { 4, "Document" },
+                    { 1, "Undefined" },
+                    { 2, "Movie" },
+                    { 5, "Music" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -484,19 +513,24 @@ namespace Infrastructure.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompanyRoles_MovieId",
+                name: "IX_CompanyRoles_CompanyRoleTypeId",
                 table: "CompanyRoles",
-                column: "MovieId");
+                column: "CompanyRoleTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompanyRoles_RoleId",
+                name: "IX_CompanyRoles_ProductionId",
                 table: "CompanyRoles",
-                column: "RoleId");
+                column: "ProductionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CoverLanguages_PublicationId",
                 table: "CoverLanguages",
                 column: "PublicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MediaItems_ConditionClassId",
+                table: "MediaItems",
+                column: "ConditionClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MediaItems_MediaTypeId",
@@ -509,34 +543,19 @@ namespace Infrastructure.Migrations
                 column: "PublicationItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonRoles_MovieId",
-                table: "PersonRoles",
-                column: "MovieId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PersonRoles_PersonId",
                 table: "PersonRoles",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonRoles_RoleId",
+                name: "IX_PersonRoles_PersonRoleTypeId",
                 table: "PersonRoles",
-                column: "RoleId");
+                column: "PersonRoleTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persons_ProductionId",
-                table: "Persons",
+                name: "IX_PersonRoles_ProductionId",
+                table: "PersonRoles",
                 column: "ProductionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Persons_ProductionId1",
-                table: "Persons",
-                column: "ProductionId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Persons_ProductionId2",
-                table: "Persons",
-                column: "ProductionId2");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productions_ProductionTypeId",
@@ -544,9 +563,19 @@ namespace Infrastructure.Migrations
                 column: "ProductionTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Productions_StudioId",
-                table: "Productions",
-                column: "StudioId");
+                name: "IX_PublicationCompanyRole_CompanyId",
+                table: "PublicationCompanyRole",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PublicationCompanyRole_CompanyRoleTypeId",
+                table: "PublicationCompanyRole",
+                column: "CompanyRoleTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PublicationCompanyRole_PublicationId",
+                table: "PublicationCompanyRole",
+                column: "PublicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PublicationItems_ProductionId",
@@ -567,11 +596,6 @@ namespace Infrastructure.Migrations
                 name: "IX_Publications_ConditionClassId",
                 table: "Publications",
                 column: "ConditionClassId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Publications_PublisherId",
-                table: "Publications",
-                column: "PublisherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpokenLanguages_PublicationItemId",
@@ -605,13 +629,13 @@ namespace Infrastructure.Migrations
                 name: "PersonRoles");
 
             migrationBuilder.DropTable(
+                name: "PublicationCompanyRole");
+
+            migrationBuilder.DropTable(
                 name: "SpokenLanguages");
 
             migrationBuilder.DropTable(
                 name: "SubtitleLanguages");
-
-            migrationBuilder.DropTable(
-                name: "CompanyRoleTypes");
 
             migrationBuilder.DropTable(
                 name: "MediaTypes");
@@ -621,6 +645,12 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Persons");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "CompanyRoleTypes");
 
             migrationBuilder.DropTable(
                 name: "PublicationItems");
@@ -636,9 +666,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "CaseTypes");
-
-            migrationBuilder.DropTable(
-                name: "Companies");
 
             migrationBuilder.DropTable(
                 name: "ConditionClasses");
