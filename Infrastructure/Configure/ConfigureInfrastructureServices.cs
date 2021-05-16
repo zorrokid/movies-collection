@@ -1,5 +1,7 @@
 using System;
+using Application.Interfaces;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +13,7 @@ namespace Infrastructure.Configure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string configPath = null)
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IPublicationAsyncRepository, PublicationAsyncRepository>();
 
             IConfiguration config = ConfigurationProvider.GetConfiguration(configPath);
 

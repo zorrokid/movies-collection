@@ -3,11 +3,11 @@ using Infrastructure.Integration.CSV.Readers;
 
 namespace Infrastructure.Integration
 {
-    public class Integration : IIntegration
+    public class IntegrationService : IIntegration
     {
         private readonly ICsvReader reader;
 
-        public Integration(ICsvReader reader)
+        public IntegrationService(ICsvReader reader)
         {
             this.reader = reader;
         }

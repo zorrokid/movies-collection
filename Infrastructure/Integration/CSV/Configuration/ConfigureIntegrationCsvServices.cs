@@ -14,7 +14,6 @@ namespace Infrastructure.Integration.CSV.Configuration
         public static IServiceCollection AddIntegrationCsvServices(this IServiceCollection services, ImportModeEnum importMode)
         {
             services
-                .AddScoped<IIntegration, Integration>()
                 .AddScoped<ICsvReader, CsvReader<PublicationItemCsvRowMap, CsvRow>>()        
                 .AddScoped<ICsvImporter<CsvRow>>((serviceProvider) => {
                     var unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>();

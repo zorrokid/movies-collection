@@ -1,3 +1,7 @@
+using Application.Configure;
+using Infrastructure.Configure;
+using Infrastructure.Integration.CSV.Configuration;
+using Infrastructure.Integration.CSV.Enums;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +23,13 @@ namespace movieAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInfrastructureServices();
 
+            // TODO separate integration from REST API? 
+            services.AddIntegrationServices();
+            services.AddIntegrationCsvServices(ImportModeEnum.PublicationItem);
+            
+            services.AddApplicationServices();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
