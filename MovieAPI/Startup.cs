@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
+using System.Reflection;
 
 namespace movieAPI
 {
@@ -30,6 +32,7 @@ namespace movieAPI
             services.AddIntegrationCsvServices(ImportModeEnum.PublicationItem);
             
             services.AddApplicationServices();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
