@@ -51,6 +51,7 @@ namespace CsvImport
                 .AddLogging(config => config.AddConsole())
                 .AddApplicationServices()
                 .AddInfrastructureServices(configPath)
+                .AddIntegrationServices()
                 .AddIntegrationCsvServices(importMode);
 
             serviceProvider = services.BuildServiceProvider(true);
