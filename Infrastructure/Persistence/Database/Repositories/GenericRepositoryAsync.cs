@@ -40,7 +40,7 @@ namespace Infrastructure.Persistence.Database.Repositories
             return entity;
         }
 
-        public async Task<IReadOnlyList<T>> FindAsync(Expression<Func<T, bool>> expression)
+        public virtual async Task<IReadOnlyList<T>> FindAsync(Expression<Func<T, bool>> expression)
             => await context.Set<T>().Where(expression).ToListAsync();
     }
 }
