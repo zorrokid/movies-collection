@@ -2,24 +2,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Application.UseCases.GetPublications;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using movieAPI.ViewModels;
 
 namespace MovieAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class PublicationsController : ControllerBase
     {
-        private readonly IUseCases useCases;
+        private readonly ILogger<PublicationsController> logger;
+        private readonly IMediator mediator;
 
-        public PublicationsController(IUseCases useCases)
+        public PublicationsController(ILogger<PublicationsController> logger, IMediator mediator)
         {
-            this.useCases = useCases;
+            this.logger = logger;
+            this.mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IReadOnlyList<PublicationViewModel>> GetAsync()
-        {
-            var publicationEntities = await useCases.GetPublicationsAsync();
+        {   
+            var publicationEntities = await mediator.Send(new GetPublicationsRequest());
 
             // TODO mapper
 
