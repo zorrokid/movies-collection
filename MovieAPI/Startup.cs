@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using AutoMapper;
+using MovieAPI.Configure;
+using System;
 using System.Reflection;
 
 namespace movieAPI
@@ -25,6 +27,15 @@ namespace movieAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins(Configuration["AllowOrigin"]);
+                    });
+            });
+
             services.AddInfrastructureServices();
 
             // TODO separate integration from REST API? 
@@ -55,7 +66,9 @@ namespace movieAPI
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
+            app.UseCors();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
