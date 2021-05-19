@@ -7,7 +7,7 @@ namespace Domain.Entities
     /// Publication is a container for publication items (movies, tv-serie seasons, documentaries etc).
     /// It has a case (usually) with barcode. Something that is sold in stores and contain some kind of media.
     /// </summary>
-    public class Publication : BaseEntity
+    public class Publication : ImportEntity
     {
         public string OriginalTitle { get; set; }
         public string LocalTitle { get; set; }
@@ -25,8 +25,6 @@ namespace Domain.Entities
         public bool HasTwoSidedCover { get; set; }
         public bool HasBooklet { get; set; }
         public List<PublicationCompanyRole> PublicationCompanyRoles { get; } = new List<PublicationCompanyRole>();
-        public int ImportOriginId { get; set; }
-        public string IdInImportOrigin { get; set; }
         public List<PublicationItem> PublicationItems {get; } = new List<PublicationItem>();
         public List<CoverLanguage> CoverLanguages { get; } = new List<CoverLanguage>();
     }
