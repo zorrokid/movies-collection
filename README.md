@@ -49,6 +49,10 @@ From the project root-folder run:
 
     dotnet ef database update --startup-project ./MovieAPI/ --project ./Infrastructure/
 
+Or use helper script 
+
+    $ bash migrate-db.sh
+
 ## Adding migrations
 
 From the project root-folder run:
@@ -64,6 +68,10 @@ To remove last migration
 To remove all migrations
 
     dotnet ef database update 0 --startup-project ./MovieAPI/ --project ./Infrastructure/
+
+Or use helper script 
+
+    $ bash clear-db.sh
 
 # Integrations
 
