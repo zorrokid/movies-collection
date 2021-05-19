@@ -18,6 +18,11 @@ namespace Infrastructure.Integration.CSV.Importers.MediaItemsStrategy
             {
                 return new EvenCountMediaTypeStrategy();
             }
+            if (csvRow.MediaType.Length > csvRow.Discs)
+            {
+                // discs are not set, use:
+                return new MultipleMatchingCountMediaTypeStrategy();
+            }
             return new BestGuessMediaTypeStrategy();
         }
     }
