@@ -14,6 +14,10 @@ namespace Infrastructure.Integration.CSV.Importers.MediaItemsStrategy
             {
                 return new MultipleMatchingCountMediaTypeStrategy();
             }
+            if (csvRow.Discs % csvRow.MediaType.Length == 0)
+            {
+                return new EvenCountMediaTypeStrategy();
+            }
             return new BestGuessMediaTypeStrategy();
         }
     }
