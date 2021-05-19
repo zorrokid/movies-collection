@@ -49,6 +49,7 @@ namespace Infrastructure.Integration.CSV.Importers
 
         private List<MediaItem> GetMediaItems(CsvRow csvRow)
         {
+            logger.LogInformation($"Creating media items, types: {csvRow.MediaType.Length}, discs: {csvRow.Discs}");
             var strategy = MediaItemsStrategyFactory.GetStrategy(csvRow);
             return strategy.Create(csvRow);
         }
