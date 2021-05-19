@@ -9,6 +9,7 @@ public interface IUnitOfWork
     PublicationCompanyRoleRepository PublicationCompanyRoles { get; }
     CompanyRepository Companies { get; }
     ProductionTypeRepository ProductionTypes { get; }
+    PublicationItemRepository PublicationItems { get; }
     void SaveChanges();
 }
 
@@ -18,12 +19,13 @@ public interface IUnitOfWork
 /// </summary>
 public class UnitOfWork : IUnitOfWork
 {
-    public PublicationRepository Publications { get; private set;}
-    public CaseTypeRepository CaseTypes { get; private set;}
-    public CompanyRoleTypeRepository CompanyRoleTypes { get; private set;}
-    public PublicationCompanyRoleRepository PublicationCompanyRoles { get; private set;}
-    public CompanyRepository Companies { get; private set;}
-    public ProductionTypeRepository ProductionTypes { get; private set;}
+    public PublicationRepository Publications { get; private set; }
+    public CaseTypeRepository CaseTypes { get; private set; }
+    public CompanyRoleTypeRepository CompanyRoleTypes { get; private set; }
+    public PublicationCompanyRoleRepository PublicationCompanyRoles { get; private set; }
+    public CompanyRepository Companies { get; private set; }
+    public ProductionTypeRepository ProductionTypes { get; private set; }
+    public PublicationItemRepository PublicationItems { get; private set; }
     private readonly MoviesContext moviesContext;
 
     public UnitOfWork(MoviesContext moviesContext)
@@ -35,6 +37,7 @@ public class UnitOfWork : IUnitOfWork
         PublicationCompanyRoles = new PublicationCompanyRoleRepository(moviesContext);
         Companies = new CompanyRepository(moviesContext);
         ProductionTypes = new ProductionTypeRepository(moviesContext);
+        PublicationItems = new PublicationItemRepository(moviesContext);
     }
 
     public void SaveChanges()

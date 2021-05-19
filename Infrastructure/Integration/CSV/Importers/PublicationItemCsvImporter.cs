@@ -22,7 +22,11 @@ namespace Infrastructure.Integration.CSV.Importers
             logger.LogInformation($"Importing {csvRow}");
             var publication = GetPublication(csvRow);
 
-            // TODO: Add importorigin to publication items as well and check if already imported
+            if (unitOfWork.PublicationItems.GetByImportOrigin(publication.ImportOriginId, publication.IdInImportOrigin) != null)
+            {
+                logger.LogWarning($"Publication item with id {csvRow.Id} already imported - skipping.");
+                return;
+            }
 
             var publicationItem = new PublicationItem
             {
