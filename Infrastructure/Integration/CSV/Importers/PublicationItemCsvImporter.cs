@@ -30,7 +30,9 @@ namespace Infrastructure.Integration.CSV.Importers
 
             var publicationItem = new PublicationItem
             {
-                Production = GetProduction(csvRow)
+                Production = GetProduction(csvRow),
+                ImportOriginId = (int) ImportOriginEnum.CustomCsv,
+                IdInImportOrigin = csvRow.Id
             };
             publicationItem.MediaItems.AddRange(GetMediaItems(csvRow));
             publication.PublicationItems.Add(publicationItem);
