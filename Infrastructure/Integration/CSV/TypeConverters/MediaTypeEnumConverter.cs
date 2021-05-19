@@ -17,8 +17,8 @@ namespace Infrastructure.Integration.CSV.TypeConverters
             { "dvd+cd", new MediaTypeEnum[] { MediaTypeEnum.DVD, MediaTypeEnum.CD } },
             { "blu-ray", new MediaTypeEnum[] { MediaTypeEnum.BluRay } },
             { "blu-ray+dvd", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.DVD } },
-            { "blu-ray 3D+blu-ray", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.BluRay3D } },
-            { "blu-ray 3D+blu-ray+dvd", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.BluRay3D, MediaTypeEnum.DVD } },
+            { "blu-ray 3d+blu-ray", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.BluRay3D } },
+            { "blu-ray 3d+blu-ray+dvd", new MediaTypeEnum[] { MediaTypeEnum.BluRay, MediaTypeEnum.BluRay3D, MediaTypeEnum.DVD } },
             { "vhs", new MediaTypeEnum[] { MediaTypeEnum.VHS } }
         };
 
