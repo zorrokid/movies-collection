@@ -18,7 +18,7 @@ namespace Infrastructure.Integration.CSV.RowMaps
             Map(m => m.Edition).Name("Edition");
             Map(m => m.Country).Name("Country");
             Map(m => m.CaseType).Name("Case").TypeConverter<CaseTypeEnumConverter>();
-            Map(m => m.Discs).Name("Discs");
+            Map(m => m.Discs).Name("Discs").Default(1);
             Map(m => m.HasSubFi).Name("Sub-fi").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.HasSubEn).Name("Sub-en").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.AspectRatio).Name("Aspect ratio");
