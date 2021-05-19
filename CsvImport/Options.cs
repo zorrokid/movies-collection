@@ -12,7 +12,7 @@ namespace CsvImport
 
         public string ConfigPath { get; set; }
 
-        [Option('m', "mode", Required = false, HelpText = "Import mode: 1 = publicatin item (default), 2 = publication")]
+        [Option('m', "mode", Required = false, HelpText = "Import mode: 0 = publication item (default), 1 = publication")]
         public ImportModeEnum ImportMode { get; set; }
     }
 }
