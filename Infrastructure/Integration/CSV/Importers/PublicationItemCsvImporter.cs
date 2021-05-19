@@ -71,7 +71,7 @@ namespace Infrastructure.Integration.CSV.Importers
             }
             if (publication == null)
             {
-                throw new CsvImportException("Failed geting/creating publication.");
+                throw new CsvImportException($"Failed geting/creating publication for {csvRow.Id}");
             }
             return publication;
         }
