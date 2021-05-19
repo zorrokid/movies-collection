@@ -26,11 +26,12 @@ namespace MovieAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IReadOnlyList<PublicationViewModel>> GetAsync()
+        public async Task<IReadOnlyList<PublicationViewModel>> GetAsync(string search)
         {   
-            var publicationEntities = await mediator.Send(new GetPublicationsRequest());
+            logger.LogDebug($"Get publications with search argument {search}");
+
+            var publicationEntities = await mediator.Send(new GetPublicationsRequest { SearchString = search });
                 
-            //var viewModels = publicationEntities.Select(ent => new PublicationViewModel(ent.Id)).ToList();
             var viewModels = mapper.Map<List<PublicationViewModel>>(publicationEntities);
             return viewModels;
         }

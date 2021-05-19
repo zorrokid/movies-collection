@@ -21,7 +21,10 @@ namespace Application.UseCases.GetPublications
         
         public Task<IReadOnlyList<Publication>> Handle(GetPublicationsRequest request, CancellationToken cancellationToken)
         {
-            return repository.FindAsync(x => x.Id > 0);
+            return repository.FindAsync(x => 
+                x.OriginalTitle.Contains(request.SearchString)
+                || x.LocalTitle.Contains(request.SearchString)
+            );
         }
     }
 }
