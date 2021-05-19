@@ -5,12 +5,6 @@
 * Automapper
 * MediatR: https://github.com/jbogard/MediatR
 
-# Building project
-
-To build the project run in the root folder
-
-    dotnet build
-
 # Database
 
 Currently the database is PostgreSQL database. 
@@ -43,6 +37,12 @@ To login to db:
 
     $ psql -Umovies -dmoviedb
 
+# Building project
+
+To build the project run in the root folder
+
+    dotnet build
+
 ## Running migrations
 
 From the project root-folder run:
@@ -53,7 +53,7 @@ From the project root-folder run:
 
 From the project root-folder run:
 
-    dotnet ef migrations add <migration name> --startup-project ./MovieAPI/ --project ./Infrastructure/ -- --environment Development
+    dotnet ef migrations add <migration name> --startup-project ./MovieAPI/ --project ./Infrastructure/
 
 ## Removing migrations
 
