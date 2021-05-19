@@ -1,11 +1,11 @@
 
 using System.Collections.Generic;
-using MovieAPI.ViewModels;
 
 namespace MovieAPI.ViewModels
 {
     public class PublicationViewModel
     {
+        public int Id { get; set; }
         public string OriginalTitle { get; set; }
         public string LocalTitle { get; set; }
         public bool IsVerified { get; set; }
