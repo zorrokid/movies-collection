@@ -27,5 +27,10 @@ namespace Domain.Entities
         public List<PublicationCompanyRole> PublicationCompanyRoles { get; } = new List<PublicationCompanyRole>();
         public List<PublicationItem> PublicationItems {get; } = new List<PublicationItem>();
         public List<CoverLanguage> CoverLanguages { get; } = new List<CoverLanguage>();
+
+        public override string ToString()
+        {
+            return $"{nameof(IdInImportOrigin)}: {IdInImportOrigin}, {nameof(OriginalTitle)}: {OriginalTitle}, {nameof(LocalTitle)}: {LocalTitle}";
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace Infrastructure.Integration.CSV.Models
 
         public override string ToString()
         {
-            return $"{Id} {OriginalTitle}";
+            return $"{nameof(Id)}: {Id} {nameof(CollectionId)}: {CollectionId} {nameof(OriginalTitle)}: {OriginalTitle} {nameof(LocalTitle)}: {LocalTitle}";
         }
     }
 }

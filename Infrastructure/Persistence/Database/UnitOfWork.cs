@@ -10,6 +10,7 @@ public interface IUnitOfWork
     CompanyRepository Companies { get; }
     ProductionTypeRepository ProductionTypes { get; }
     PublicationItemRepository PublicationItems { get; }
+    PersonRepository Persons { get; }
     void SaveChanges();
 }
 
@@ -26,6 +27,7 @@ public class UnitOfWork : IUnitOfWork
     public CompanyRepository Companies { get; private set; }
     public ProductionTypeRepository ProductionTypes { get; private set; }
     public PublicationItemRepository PublicationItems { get; private set; }
+    public PersonRepository Persons { get; private set; }
     private readonly MoviesContext moviesContext;
 
     public UnitOfWork(MoviesContext moviesContext)
@@ -38,6 +40,7 @@ public class UnitOfWork : IUnitOfWork
         Companies = new CompanyRepository(moviesContext);
         ProductionTypes = new ProductionTypeRepository(moviesContext);
         PublicationItems = new PublicationItemRepository(moviesContext);
+        Persons = new PersonRepository(moviesContext);
     }
 
     public void SaveChanges()

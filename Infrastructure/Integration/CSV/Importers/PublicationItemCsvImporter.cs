@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Application.Extensions;
 using Domain.Entities;
 using Domain.Enumerations;
 using Infrastructure.Integration.CSV.Exceptions;
@@ -19,15 +20,16 @@ namespace Infrastructure.Integration.CSV.Importers
         
         public void Import(CsvRow csvRow)
         {
-            logger.LogInformation($"Importing {csvRow}");
-            var publication = GetPublication(csvRow);
+            logger.LogInformation($"Start importing {csvRow}");
 
-            if (unitOfWork.PublicationItems.GetByImportOrigin(publication.ImportOriginId, publication.IdInImportOrigin) != null)
+            if (unitOfWork.PublicationItems.GetByImportOrigin((int)ImportOriginEnum.CustomCsv, csvRow.Id) != null)
             {
                 logger.LogWarning($"Publication item with id {csvRow.Id} already imported - skipping.");
                 return;
             }
 
+            logger.LogInformation($"Creating new publication item of {csvRow}.");
+            var publication = GetPublication(csvRow);
             var publicationItem = new PublicationItem
             {
                 Production = GetProduction(csvRow),
@@ -36,6 +38,9 @@ namespace Infrastructure.Integration.CSV.Importers
             };
             publicationItem.MediaItems.AddRange(GetMediaItems(csvRow));
             publication.PublicationItems.Add(publicationItem);
+
+            publicationItem.SubtitleLanguages.AddRange(CreateSubtitles(csvRow));
+
             logger.LogInformation($"Created publication item {publicationItem}");
             if (publication.Id == 0)
             {
@@ -47,6 +52,27 @@ namespace Infrastructure.Integration.CSV.Importers
                 logger.LogInformation($"Updating publication item {publicationItem.Id} to db.");
                 unitOfWork.Publications.Update(publication);
             }
+            logger.LogInformation($"Finish importing {csvRow}");
+        }
+
+        private List<SubtitleLanguage> CreateSubtitles(CsvRow csvRow)
+        {
+            List<SubtitleLanguage> subtitles = new();
+            if (csvRow.HasSubEn)
+            {
+                subtitles.Add(new SubtitleLanguage
+                {
+                    LanguageCode = "en"
+                });
+            }
+            if (csvRow.HasSubFi)
+            {
+                subtitles.Add(new SubtitleLanguage
+                {
+                    LanguageCode = "fi"
+                });
+            }
+            return subtitles;
         }
 
         private List<MediaItem> GetMediaItems(CsvRow csvRow)
@@ -59,19 +85,25 @@ namespace Infrastructure.Integration.CSV.Importers
         private Publication GetPublication(CsvRow csvRow)
         {
             Publication publication = null;
+
+            // for publication item publication id depends wether CollectionId is set or not
+            // if collection id is set, this row is part of some publication
+            // otherwise creates a publication of this row cońtaining publication item of this same row
             var publicationId = csvRow.CollectionId;
+
             if (!string.IsNullOrEmpty(publicationId))
             {
-                logger.LogInformation($"Trying to find publication with id {csvRow.CollectionId}");
+                logger.LogInformation($"Checking if there's existing publication with id {publicationId}");
                 publication = unitOfWork.Publications.GetByImportOrigin((int) ImportOriginEnum.CustomCsv, publicationId);
             }
             else
             {
                 publication = CreatePublication(csvRow);
+                logger.LogInformation($"Created new publication {publication}");
             }
             if (publication == null)
             {
-                throw new CsvImportException($"Failed geting/creating publication for {csvRow.Id}");
+                throw new CsvImportException($"Failed geting/creating publication for {csvRow}");
             }
             return publication;
         }
@@ -110,22 +142,22 @@ namespace Infrastructure.Integration.CSV.Importers
             var directors = new List<ProductionPersonRole>();
             foreach(var directorName in directorNames)
             {
-                // var person = personRepository.GetByName(directorName).FirstOrDefault();
-                // if(person != null)
-                // {
-                //     directors.Add(person);
-                // }
-                // else 
-                // {
-                //     var newPerson = new Person
-                //     {
-                //         Name = directorName,
-                //         GivenName = directorName.GivenName(),
-                //         Surname = directorName.FamilyName()
-                //     };
-                //     personRepository.Add(newPerson);
-                //     directors.Add(newPerson);
-                // }
+                var person = unitOfWork.Persons.GetByName(directorName).FirstOrDefault();
+                if(person == null)
+                {
+                    person = new Person
+                    {
+                        Name = directorName,
+                        GivenName = directorName.GivenName(),
+                        Surname = directorName.FamilyName()
+                    };
+                    unitOfWork.Persons.Add(person);
+                }
+                directors.Add(new ProductionPersonRole
+                {
+                    Person = person,
+                    PersonRoleTypeId = (int)PersonRoleEnum.Director
+                });
             }
             return directors;
         }

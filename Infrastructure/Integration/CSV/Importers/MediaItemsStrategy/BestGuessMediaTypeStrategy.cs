@@ -8,7 +8,8 @@ namespace Infrastructure.Integration.CSV.Importers.MediaItemsStrategy
     {
         public List<MediaItem> Create(CsvRow csvRow)
         {
-            throw new System.NotImplementedException();
+            // Let's not try to guess after all
+            return new();
         }
     }
 }
