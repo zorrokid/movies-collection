@@ -7,3 +7,5 @@ obj/
 
 # Environment appsettings must be ignored!
 appsettings.*.json
+
+*memo*
