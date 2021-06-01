@@ -1,9 +1,9 @@
-using Application.Interfaces;
 using Infrastructure.Integration.CSV.Enums;
 using Infrastructure.Integration.CSV.Importers;
 using Infrastructure.Integration.CSV.Models;
 using Infrastructure.Integration.CSV.Readers;
 using Infrastructure.Integration.CSV.RowMaps;
+using Infrastructure.Persistence.Database;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

@@ -6,6 +6,7 @@ using Domain.Enumerations;
 using Infrastructure.Integration.CSV.Exceptions;
 using Infrastructure.Integration.CSV.Importers.MediaItemsStrategy;
 using Infrastructure.Integration.CSV.Models;
+using Infrastructure.Persistence.Database;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Integration.CSV.Importers

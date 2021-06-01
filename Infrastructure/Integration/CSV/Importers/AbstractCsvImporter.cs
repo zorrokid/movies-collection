@@ -2,6 +2,7 @@ using System.Linq;
 using Domain.Entities;
 using Domain.Enumerations;
 using Infrastructure.Integration.CSV.Models;
+using Infrastructure.Persistence.Database;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Integration.CSV.Importers
