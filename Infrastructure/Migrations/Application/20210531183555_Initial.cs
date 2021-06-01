@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.Application
 {
     public partial class Initial : Migration
     {
@@ -328,7 +328,9 @@ namespace Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PublicationId = table.Column<int>(type: "integer", nullable: false),
                     ProductionId = table.Column<int>(type: "integer", nullable: false),
-                    Title = table.Column<string>(type: "text", nullable: true)
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    ImportOriginId = table.Column<int>(type: "integer", nullable: false),
+                    IdInImportOrigin = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
