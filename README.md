@@ -47,7 +47,10 @@ To build the project run in the root folder
 
 From the project root-folder run:
 
-    dotnet ef database update --startup-project ./MovieAPI/ --project ./Infrastructure/
+    dotnet ef database update --startup-project ./MovieAPI/ --project ./Infrastructure/ --context IdentityContext
+
+    dotnet ef database update --startup-project ./MovieAPI/ --project ./Infrastructure/ --context ApplicationContext
+
 
 Or use helper script 
 
@@ -55,19 +58,27 @@ Or use helper script
 
 ## Adding migrations
 
+## Adding migrations for identity db
+
 From the project root-folder run:
 
-    dotnet ef migrations add <migration name> --startup-project ./MovieAPI/ --project ./Infrastructure/
+    dotnet ef migrations add <migration name> --startup-project ./MovieAPI/ --project ./Infrastructure/ --context IdentityContext --output-dir=Migrations/Identity
+
+## Adding migrations for app db
+
+From the project root-folder run:
+
+    dotnet ef migrations add <migration name> --startup-project ./MovieAPI/ --project ./Infrastructure/ --context ApplicationContext --output-dir=Migrations/Application
 
 ## Removing migrations
 
 To remove last migration
 
-    dotnet ef migrations remove
+    dotnet ef migrations remove --context ApplicationContext
 
 To remove all migrations
 
-    dotnet ef database update 0 --startup-project ./MovieAPI/ --project ./Infrastructure/
+    dotnet ef database update 0 --startup-project ./MovieAPI/ --project ./Infrastructure/  --context ApplicationContext
 
 Or use helper script 
 
