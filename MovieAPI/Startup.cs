@@ -1,4 +1,5 @@
 using Application.Configure;
+using Auth.Configuration;
 using Infrastructure.Configure;
 using Infrastructure.Integration.CSV.Configuration;
 using Infrastructure.Integration.CSV.Enums;
@@ -8,7 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
+using MovieAPI.Configuration;
+using System;
 
 namespace movieAPI
 {
@@ -34,14 +36,17 @@ namespace movieAPI
             });
 
             services.AddInfrastructureServices();
+            services.AddIdentityServices();
 
             // TODO separate integration from REST API? 
             services.AddIntegrationServices();
             services.AddIntegrationCsvServices(ImportModeEnum.PublicationItem);
             
             services.AddApplicationServices();
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
+            services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "movieAPI", Version = "v1" });
@@ -65,7 +70,9 @@ namespace movieAPI
             app.UseAuthorization();
             
             app.UseCors();
-            
+
+            app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
