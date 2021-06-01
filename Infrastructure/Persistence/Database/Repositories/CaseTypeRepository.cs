@@ -4,7 +4,7 @@ namespace Infrastructure.Persistence.Database.Repositories
 {
     public class CaseTypeRepository : NamedEntityRepository<CaseType>
     {
-        public CaseTypeRepository(MoviesContext context) : base(context)
+        public CaseTypeRepository(ApplicationContext context) : base(context)
         {}
     }
 }

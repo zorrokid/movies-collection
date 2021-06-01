@@ -1,6 +1,6 @@
 using System;
 using Application.Interfaces;
-using Infrastructure.Persistence;
+using Infrastructure.Persistence.Database;
 using Infrastructure.Persistence.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,13 +17,13 @@ namespace Infrastructure.Configure
 
             IConfiguration config = ConfigurationProvider.GetConfiguration(configPath);
 
-            var connectionString = config.GetConnectionString(nameof(MoviesContext));
+            var connectionString = config.GetConnectionString(nameof(ApplicationContext));
             if (connectionString == null)
             {
-                throw new Exception($"No connectionString {nameof(MoviesContext)} from config");
+                throw new Exception($"No connectionString {nameof(ApplicationContext)} from config");
             }
 
-            services.AddDbContext<MoviesContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
             return services;
         }
     }

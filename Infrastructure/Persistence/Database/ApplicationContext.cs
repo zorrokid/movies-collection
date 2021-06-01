@@ -2,11 +2,11 @@ using Domain.Entities;
 using Domain.Enumerations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure.Persistence.Database
 {
-    public class MoviesContext : DbContext
+    public class ApplicationContext : DbContext
     {
-        public MoviesContext(DbContextOptions<MoviesContext> options) : base(options) {}
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) {}
         
         public DbSet<Production> Productions { get; set; }
         public DbSet<Person> Persons { get; set; }

@@ -7,9 +7,9 @@ namespace Infrastructure.Persistence.Database.Repositories
 {
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
-        protected readonly MoviesContext context;
+        protected readonly ApplicationContext context;
         
-        public GenericRepository(MoviesContext context)
+        public GenericRepository(ApplicationContext context)
         {
             this.context = context;
         }

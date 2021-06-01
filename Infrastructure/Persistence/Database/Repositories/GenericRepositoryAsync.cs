@@ -11,9 +11,9 @@ namespace Infrastructure.Persistence.Database.Repositories
 {
     public class GenericRepositoryAsync<T> : IRepositoryAsync<T> where T : BaseEntity
     {
-        protected readonly MoviesContext context;
+        protected readonly ApplicationContext context;
         
-        public GenericRepositoryAsync(MoviesContext context)
+        public GenericRepositoryAsync(ApplicationContext context)
         {
             this.context = context;
         }

@@ -4,7 +4,7 @@ namespace Infrastructure.Persistence.Database.Repositories
 {
     public class PublicationRepository : ImportEntityRepository<Publication>
     {
-        public PublicationRepository(MoviesContext context) : base(context)
+        public PublicationRepository(ApplicationContext context) : base(context)
         {}
     }
 }

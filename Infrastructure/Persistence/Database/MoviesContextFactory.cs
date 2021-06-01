@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure.Persistence.Database
 {
-    public class MoviesContextFactory : IDesignTimeDbContextFactory<MoviesContext>
+    public class MoviesContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
     {
-        public MoviesContext CreateDbContext(string[] args)
+        public ApplicationContext CreateDbContext(string[] args)
         {   
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -20,14 +20,14 @@ namespace Infrastructure.Persistence
                 .AddEnvironmentVariables()
                 .Build();
 
-            var connectionString = config.GetConnectionString(nameof(MoviesContext));
+            var connectionString = config.GetConnectionString(nameof(ApplicationContext));
             if (connectionString == null)
             {
-                throw new Exception($"No connectionString {nameof(MoviesContext)} from config");
+                throw new Exception($"No connectionString {nameof(ApplicationContext)} from config");
             }
-            var optionsBuilder = new DbContextOptionsBuilder<MoviesContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
             optionsBuilder.UseNpgsql(connectionString);
-            return new MoviesContext(optionsBuilder.Options);
+            return new ApplicationContext(optionsBuilder.Options);
         }
     }
 }

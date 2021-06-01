@@ -7,7 +7,7 @@ namespace Infrastructure.Persistence.Database.Repositories
     public class ImportEntityRepository<T> : GenericRepository<T>, IRepository<T>, IImportEntityRepository<T> 
         where T : ImportEntity
     {
-        public ImportEntityRepository(MoviesContext context) : base(context)
+        public ImportEntityRepository(ApplicationContext context) : base(context)
         {
         }
 

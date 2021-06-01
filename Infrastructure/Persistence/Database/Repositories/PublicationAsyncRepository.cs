@@ -11,7 +11,7 @@ namespace Infrastructure.Persistence.Database.Repositories
 {
     public class PublicationAsyncRepository : GenericRepositoryAsync<Publication>, IPublicationAsyncRepository 
     {
-        public PublicationAsyncRepository(MoviesContext context) : base(context) { }
+        public PublicationAsyncRepository(ApplicationContext context) : base(context) { }
 
         public async override Task<IReadOnlyList<Publication>> FindAsync(Expression<Func<Publication, bool>> expression)
             => await context
