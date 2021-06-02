@@ -1,3 +1,7 @@
+# Client
+
+Web client for this project is here: https://github.com/zorrokid/movies-collection-web-client
+
 # Framework and library dependencies
 
 * .net 5
@@ -54,7 +58,7 @@ From the project root-folder run:
 
 Or use helper script 
 
-    $ bash migrate-db.sh
+    $ bash migate-db.sh
 
 ## Adding migrations
 
