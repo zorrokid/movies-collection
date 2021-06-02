@@ -1,5 +1,6 @@
 using Application.Configure;
 using Auth.Configuration;
+using ErrorHandling.Middleware;
 using Infrastructure.Configure;
 using Infrastructure.Integration.CSV.Configuration;
 using Infrastructure.Integration.CSV.Enums;
@@ -30,7 +31,9 @@ namespace movieAPI
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins(Configuration["AllowOrigin"]);
+                        builder.WithOrigins(Configuration["AllowOrigin"])
+                            .WithHeaders(new string[] {"Content-Type", "Authorization"})
+                            .WithMethods(new string[] {"GET", "PUT", "POST", "DELETE"});
                     });
             });
 
@@ -71,6 +74,8 @@ namespace movieAPI
             app.UseCors();
 
             app.UseAuthentication();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

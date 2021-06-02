@@ -17,5 +17,6 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Auth\Auth.csproj" />
+    <ProjectReference Include="..\ErrorHandling\ErrorHandling.csproj" />
   </ItemGroup>
 </Project>
