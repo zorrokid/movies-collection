@@ -31,7 +31,7 @@ namespace Application.UseCases.AuthenticateUseCase
             }
 
             var response = mapper.Map<AuthenticateResponse>(user);
-            response.JwtToken = tokenGenerator.GenerateToken(user);
+            response.Token = tokenGenerator.GenerateToken(user);
             return response;
         }
     }
