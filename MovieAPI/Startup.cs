@@ -1,5 +1,6 @@
 using Application.Configure;
 using Auth.Configuration;
+using Auth.Middleware;
 using ErrorHandling.Middleware;
 using Infrastructure.Configure;
 using Infrastructure.Integration.CSV.Configuration;
@@ -37,6 +38,7 @@ namespace movieAPI
                     });
             });
 
+            
             services.AddInfrastructureServices();
             services.AddIdentityServices();
 
@@ -48,6 +50,7 @@ namespace movieAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
             services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
+            services.AddAuthServices();
 
             services.AddSwaggerGen(c =>
             {
@@ -76,6 +79,8 @@ namespace movieAPI
             app.UseAuthentication();
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+            app.UseMiddleware<AuthorizationMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

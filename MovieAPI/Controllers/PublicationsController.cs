@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.UseCases.GetPublications;
+using Auth.Attributes;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using MovieAPI.ViewModels;
 
 namespace MovieAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class PublicationsController : ControllerBase

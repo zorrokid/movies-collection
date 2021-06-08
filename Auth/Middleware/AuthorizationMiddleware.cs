@@ -9,31 +9,31 @@ namespace Auth.Middleware
     public class AuthorizationMiddleware
     {
         private readonly RequestDelegate next;
-        private readonly ITokenValidator jwtTokenValidator;
-        private readonly IIdentityRepository identityRepository;
+        private readonly ITokenValidator tokenValidator;
+
 
         public AuthorizationMiddleware(RequestDelegate next, 
-            ITokenValidator jwtTokenValidator,
-            IIdentityRepository identityRepository)
+            ITokenValidator tokenValidator)
         {
-            this.jwtTokenValidator = jwtTokenValidator;
-            this.identityRepository = identityRepository;
+            this.tokenValidator = tokenValidator;
+
             this.next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, IIdentityRepository identityRepository)
         {
             var token = context.Request.Headers["Authorization"]
                 .FirstOrDefault()?
                 .Split()
                 .Last();
 
-            var userId = jwtTokenValidator.ValidateToken(token);
+            var userId = tokenValidator.ValidateToken(token);
 
             if (userId != null)
             {
                 context.Items["User"] = await identityRepository.GetByIdAsync(userId.Value);
             }
+            await next(context);
         }
     }
 }

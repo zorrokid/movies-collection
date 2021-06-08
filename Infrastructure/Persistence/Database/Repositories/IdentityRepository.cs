@@ -16,9 +16,9 @@ namespace Infrastructure.Persistence.Database.Repositories
             this.context = context;
         }
 
-        public async Task<User> GetByUserNameAsync(string userName)
+        public Task<User> GetByUserNameAsync(string userName)
         {
-            return await context.Users.SingleOrDefaultAsync(x => x.Username == userName);
+            return context.Users.SingleOrDefaultAsync(x => x.Username == userName);
         }
 
         public Task DeleteAsync(int id)
@@ -33,7 +33,7 @@ namespace Infrastructure.Persistence.Database.Repositories
 
         public Task<User> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return context.Users.SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task AddAsync(User user)

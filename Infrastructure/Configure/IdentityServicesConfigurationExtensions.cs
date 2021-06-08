@@ -21,7 +21,7 @@ namespace Infrastructure.Configure
             }
 
             services.AddDbContext<IdentityContext>(options => options.UseNpgsql(connectionString));
-            services.AddTransient<IIdentityRepository, IdentityRepository>();
+            services.AddScoped<IIdentityRepository, IdentityRepository>();
 
             return services;
         }
