@@ -9,6 +9,17 @@ Web client for this project is here: https://github.com/zorrokid/movies-collecti
 * Automapper
 * MediatR: https://github.com/jbogard/MediatR
 
+# MovieAPI
+
+This is the main entry point of this backend project providing REST API for this application.
+
+## appsettings
+
+To set environment specific appsettings.json export environment variable first, e.g. to use appsettings.Development.json:
+
+    $ export ASPNETCORE_ENVIRONMENT=Development
+
+
 # Database
 
 Currently the database is PostgreSQL database. 
