@@ -125,8 +125,6 @@ To launch API go to MoviesAPI-project folder and run
 
 Swagger is started in following address: https://localhost:5001/swagger/index.html
 
-TODO: certificate problem on running localhost
-
 # Adding project
 
 Create project folder inside root folder of repository.
@@ -152,4 +150,45 @@ To add project to solution in root folder run:
 To run tests, in root folder run
 
     dotnet test
+
+# Creating local development certificate for HTTPS
+
+Links:
+* https://github.com/FiloSottile/mkcert
+* https://blog.bitsrc.io/using-https-for-local-development-for-react-angular-and-node-fdfaf69693cd
+
+## Create root certificate
+
+    $ mkcert -install
+    Created a new local CA 💥
+    Sudo password:         
+    The local CA is now installed in the system trust store! ⚡️
+    The local CA is now installed in the Firefox and/or Chrome/Chromium trust store (requires browser restart)! 🦊
+
+## Create certificate for localhost
+
+    $ mkcert -CAROOT
+    /home/mikko/.local/share/mkcert
+
+    ~/.local/share/mkcert$ mkcert localhost
+
+    Created a new certificate valid for the following names 📜
+    - "localhost"
+
+    The certificate is at "./localhost.pem" and the key at "./localhost-key.pem" ✅
+
+    It will expire on 12 September 2023 🗓
+
+## Set the webpack devserver config for https
+
+    devServer: {
+        contentBase: './dist',
+        hot: true,
+        https: {
+            key: fs.readFileSync('/home/mikko/.local/share/mkcert/localhost-key.pem'),
+            cert: fs.readFileSync('/home/mikko/.local/share/mkcert/localhost.pem'),
+            ca: fs.readFileSync('/home/mikko/.local/share/mkcert/rootCA.pem'),
+          },
+    },
+
 
