@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
 using Domain.Entities;
 using Domain.Enumerations;
+using Infrastructure.Integration.CSV.Exceptions;
 using Infrastructure.Integration.CSV.Models;
 using Infrastructure.Persistence.Database;
 using Microsoft.Extensions.Logging;
@@ -18,12 +20,24 @@ namespace Infrastructure.Integration.CSV.Importers
             this.logger = logger;
         }
 
-        protected Publication CreatePublication(CsvRow csvRow)
+        protected string CreateExternalId(CsvRow csvRow)
+        {
+            // Id from source material cannot be used since there are duplicate Id's
+            // Combine externalId from fields: Id, Barcode, CollecionId
+            var idParts = new string[]{ csvRow.Id, csvRow.Barcode, csvRow.IMDBCode, csvRow.CollectionId }
+                .Where(id => !string.IsNullOrWhiteSpace(id))
+                .ToArray();
+
+            if (!idParts.Any()) throw new CsvImportException($"Could not create externalId for {csvRow}.");
+            return string.Join("|", idParts);
+        }
+
+        protected Publication CreatePublication(CsvRow csvRow, string externalId)
         {
             var publication = new Publication
             {
                 ImportOriginId = (int)ImportOriginEnum.CustomCsv,
-                IdInImportOrigin = csvRow.Id,
+                IdInImportOrigin = externalId,
                 IsVerified = csvRow.IsChecked,
                 Barcode = csvRow.Barcode,
                 HasBooklet = csvRow.HasLeaflet,

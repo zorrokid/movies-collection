@@ -19,7 +19,7 @@ namespace Infrastructure.Integration.CSV.Importers
                 logger.LogWarning($"Publication with id {csvRow.Id} already imported - skipping.");
                 return;
             }
-            var publication = CreatePublication(csvRow);
+            var publication = CreatePublication(csvRow, csvRow.Id);
             unitOfWork.Publications.Add(publication);
         }
     }

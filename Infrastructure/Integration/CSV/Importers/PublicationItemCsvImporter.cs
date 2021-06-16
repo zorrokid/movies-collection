@@ -23,19 +23,23 @@ namespace Infrastructure.Integration.CSV.Importers
         {
             logger.LogInformation($"Start importing {csvRow}");
 
-            if (unitOfWork.PublicationItems.GetByImportOrigin((int)ImportOriginEnum.CustomCsv, csvRow.Id) != null)
+            var externalId = CreateExternalId(csvRow);
+
+            logger.LogInformation($"Created externalId '{externalId}'");
+
+            if (unitOfWork.PublicationItems.GetByImportOrigin((int)ImportOriginEnum.CustomCsv, externalId) != null)
             {
-                logger.LogWarning($"Publication item with id {csvRow.Id} already imported - skipping.");
+                logger.LogWarning($"Publication item with id {externalId} already imported - skipping.");
                 return;
             }
 
             logger.LogInformation($"Creating new publication item of {csvRow}.");
-            var publication = GetPublication(csvRow);
+            var publication = GetPublication(csvRow, externalId);
             var publicationItem = new PublicationItem
             {
                 Production = GetProduction(csvRow),
                 ImportOriginId = (int) ImportOriginEnum.CustomCsv,
-                IdInImportOrigin = csvRow.Id
+                IdInImportOrigin = externalId
             };
             publicationItem.MediaItems.AddRange(GetMediaItems(csvRow));
             publication.PublicationItems.Add(publicationItem);
@@ -83,23 +87,24 @@ namespace Infrastructure.Integration.CSV.Importers
             return strategy.Create(csvRow);
         }
 
-        private Publication GetPublication(CsvRow csvRow)
+        private Publication GetPublication(CsvRow csvRow, string externalId)
         {
             Publication publication = null;
 
-            // for publication item publication id depends wether CollectionId is set or not
-            // if collection id is set, this row is part of some publication
-            // otherwise creates a publication of this row cońtaining publication item of this same row
+            // For publication item publication id depends weather CollectionId is set or not:
+            // - if CollectionId is set, this row is part of some publication (containing multiple publication items)
+            // - otherwise create a publication of this row containing publication item also created of this same row
             var publicationId = csvRow.CollectionId;
 
             if (!string.IsNullOrEmpty(publicationId))
             {
                 logger.LogInformation($"Checking if there's existing publication with id {publicationId}");
                 publication = unitOfWork.Publications.GetByImportOrigin((int) ImportOriginEnum.CustomCsv, publicationId);
+                if (publication == null) throw new CsvImportException($"Didn't find publication for item with CollectionId {publicationId}.");
             }
             else
             {
-                publication = CreatePublication(csvRow);
+                publication = CreatePublication(csvRow, externalId);
                 logger.LogInformation($"Created new publication {publication}");
             }
             if (publication == null)
