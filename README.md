@@ -2,6 +2,16 @@
 
 Web client for this project is here: https://github.com/zorrokid/movies-collection-web-client
 
+# Build and run ín docker
+
+Build image with tag "movie-api":
+
+$ sudo docker build -f MovieAPI/Dockerfile -t movie-api .
+
+To run in interactive terminal, run container with name "movie-api-container":
+
+$ sudo docker run -it -p 5001:80 --name movie-api-container movie-api
+
 # Framework and library dependencies
 
 * .net 5
@@ -111,9 +121,14 @@ Run build
 
 Run CsvImport to get help about command line options.
 
+
 Example:
 
     $ bin/Debug/net5.0/CsvImport -p data/Collections.csv -c /home/mikko/dev/dotnet/movies/MovieAPI/ -m 1
+
+To use development appsettings, set environment before running CsvImport:
+
+    $ export ASPNETCORE_ENVIRONMENT=Development
 
 # API
 
@@ -190,5 +205,18 @@ Links:
             ca: fs.readFileSync('/home/mikko/.local/share/mkcert/rootCA.pem'),
           },
     },
+
+## Uninstall certificate
+
+~/.local/share/mkcert$ mkcert -uninstall
+Sudo password:         
+The local CA is now uninstalled from the system trust store(s)! 👋
+
+## Problems
+
+mikko@mikko-Strix-15-GL503GE:~/dev/dotnet/movies/MovieAPI$ dotnet dev-certs https -t
+Trusting the HTTPS development certificate was requested. Trusting the certificate on Linux distributions automatically is not supported. For instructions on how to manually trust the certificate on your Linux distribution, go to https://aka.ms/dev-certs-trust
+A valid HTTPS certificate is already present.
+
 
 
