@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 
-#ENV ASPNETCORE_ENVIRONMENT=”development”
+ENV ASPNETCORE_ENVIRONMENT=Production
 
 WORKDIR /app
 
@@ -27,6 +27,8 @@ COPY MovieAPI/. ./MovieAPI/
 COPY Application.Tests/. ./Application.Tests
 COPY Infrastructure.Tests/. ./Infrastructure.Tests
 
+COPY MovieAPI/appsettings.${ASPNETCORE_ENVIRONMENT}.json ./MovieAPI/appsettings.json
+
 WORKDIR /app/MovieAPI
 RUN dotnet publish -c Release -o out
 
@@ -34,4 +36,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
 WORKDIR /app
 
 COPY --from=build /app/MovieAPI/out ./
-ENTRYPOINT ["dotnet", "movieAPI.dll"]
+# This will not be used in Heroku:
+#ENTRYPOINT ["dotnet", "movieAPI.dll"]
+
+# For Heroku:
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet movieAPI.dll
