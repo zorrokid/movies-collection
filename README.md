@@ -6,11 +6,11 @@ Web client for this project is here: https://github.com/zorrokid/movies-collecti
 
 Build image with tag "movie-api":
 
-$ sudo docker build -f MovieAPI/Dockerfile -t movie-api .
+$ docker build -f MovieAPI/Dockerfile -t movie-api .
 
 To run in interactive terminal, run container with name "movie-api-container":
 
-$ sudo docker run -it -p 5001:80 --name movie-api-container movie-api
+$ docker run -it -p 5001:80 --name movie-api-container movie-api
 
 # Framework and library dependencies
 
