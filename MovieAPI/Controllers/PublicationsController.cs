@@ -26,13 +26,10 @@ namespace MovieAPI.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IReadOnlyList<PublicationViewModel>> GetAsync(string search)
+        [HttpPost]
+        public async Task<IReadOnlyList<PublicationViewModel>> FetchPublicationsAsync(GetPublicationsRequest getPublicationsRequest)
         {   
-            logger.LogDebug($"Get publications with search argument {search}");
-
-            var publicationEntities = await mediator.Send(new GetPublicationsRequest { SearchString = search });
-                
+            var publicationEntities = await mediator.Send(getPublicationsRequest);
             var viewModels = mapper.Map<List<PublicationViewModel>>(publicationEntities);
             return viewModels;
         }

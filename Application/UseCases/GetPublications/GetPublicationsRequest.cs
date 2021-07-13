@@ -6,6 +6,6 @@ namespace Application.UseCases.GetPublications
 {
     public class GetPublicationsRequest : IRequest<IReadOnlyList<Publication>>
     {
-        public string SearchString { get; set; }
+        public string SearchPhrase { get; set; }
     }
 }

@@ -19,8 +19,8 @@ namespace Application.UseCases.GetPublications
         public Task<IReadOnlyList<Publication>> Handle(GetPublicationsRequest request, CancellationToken cancellationToken)
         {
             return repository.FindAsync(x => 
-                x.OriginalTitle.Contains(request.SearchString)
-                || x.LocalTitle.Contains(request.SearchString)
+                x.OriginalTitle.Contains(request.SearchPhrase)
+                || x.LocalTitle.Contains(request.SearchPhrase)
             );
         }
     }
