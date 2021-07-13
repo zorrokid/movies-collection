@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.UseCases.GetPublications
 {
-    public class GetPublicationsHandler : IRequestHandler<GetPublicationsRequest, IReadOnlyList<Publication>>
+    public class GetPublicationsHandler : IRequestHandler<GetPublicationsRequest, List<Publication>>
     {
         private readonly IPublicationAsyncRepository repository;
 
@@ -16,12 +16,9 @@ namespace Application.UseCases.GetPublications
             this.repository = repository;
         }
         
-        public Task<IReadOnlyList<Publication>> Handle(GetPublicationsRequest request, CancellationToken cancellationToken)
+        public Task<List<Publication>> Handle(GetPublicationsRequest request, CancellationToken cancellationToken)
         {
-            return repository.FindAsync(x => 
-                x.OriginalTitle.Contains(request.SearchPhrase)
-                || x.LocalTitle.Contains(request.SearchPhrase)
-            );
+            return repository.GetPublicationsAsync(request.SearchPhrase);
         }
     }
 }

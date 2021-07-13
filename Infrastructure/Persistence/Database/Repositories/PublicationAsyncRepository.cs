@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain.Entities;
@@ -13,12 +11,16 @@ namespace Infrastructure.Persistence.Database.Repositories
     {
         public PublicationAsyncRepository(ApplicationContext context) : base(context) { }
 
-        public async override Task<IReadOnlyList<Publication>> FindAsync(Expression<Func<Publication, bool>> expression)
-            => await context
+        public Task<List<Publication>> GetPublicationsAsync(string searchPhrase)
+        {
+            var searchPattern = searchPhrase.ToLower();
+            return context
                 .Publications
-                .Where(expression)
+                .Where(pub => pub.OriginalTitle.ToLower().Contains(searchPattern.ToLower())
+                    || pub.LocalTitle.ToLower().Contains(searchPattern))
                 .Include(p => p.PublicationItems)
                 .ThenInclude(pi => pi.Production)
                 .ToListAsync();
+        }
     }
 }
