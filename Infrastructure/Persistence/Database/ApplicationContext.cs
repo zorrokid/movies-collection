@@ -10,12 +10,12 @@ namespace Infrastructure.Persistence.Database
         
         public DbSet<Production> Productions { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<ProductionPersonRole> PersonRoles { get; set; }
+        public DbSet<ProductionPersonRole> ProductionPersonRoles { get; set; }
         public DbSet<CollectionStatus> CollectionStatuses { get; set; }
         public DbSet<ConditionClass> ConditionClasses { get; set; }
         public DbSet<CaseType> CaseTypes { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<ProductionCompanyRole> CompanyRoles { get; set; }
+        public DbSet<ProductionCompanyRole> ProductionCompanyRoles { get; set; }
         public DbSet<CompanyRoleType> CompanyRoleTypes { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<CoverLanguage> CoverLanguages { get; set; }
