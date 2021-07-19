@@ -13,7 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Serilog.Core;
 using System;
 
 namespace movieAPI
@@ -70,8 +69,11 @@ namespace movieAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "movieAPI v1"));
             }
-
-            app.UseHttpsRedirection();
+            else
+            {
+                // TODO: fix https certificate problems in development environment
+                app.UseHttpsRedirection();
+            }
 
             app.UseRouting();
 
