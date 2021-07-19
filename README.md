@@ -91,23 +91,30 @@ From the project root-folder run:
 
 ## Adding migrations for app db
 
-From the project root-folder run:
+ From the repository root folder run:
 
     dotnet ef migrations add <migration name> --startup-project ./MovieAPI/ --project ./Infrastructure/ --context ApplicationContext --output-dir=Migrations/Application
 
 ## Removing migrations
 
-To remove last migration
+To remove last migration (from repository root folder)
 
-    dotnet ef migrations remove --context ApplicationContext
+    dotnet ef migrations remove --context ApplicationContext --project ./Infrastructure --startup-project ./MovieAPI/ 
 
-To remove all migrations
+## Reverting migartions from DB
+
+Reverting to certain migration (from the repository root folder):
+
+    dotnet ef database update 20210531183555_Initial --startup-project ./MovieAPI/ --project ./Infrastructure/  --context ApplicationContext
+
+
+Reverting all migrations (from the repository root folder)
 
     dotnet ef database update 0 --startup-project ./MovieAPI/ --project ./Infrastructure/  --context ApplicationContext
 
 Or use helper script 
 
-    $ bash clear-db.sh
+    bash clear-db.sh
 
 # Integrations
 
