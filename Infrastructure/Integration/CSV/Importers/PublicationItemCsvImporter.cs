@@ -116,7 +116,30 @@ namespace Infrastructure.Integration.CSV.Importers
 
         private Production GetProduction(CsvRow csvRow)
         {
+            if (string.IsNullOrEmpty(csvRow.OriginalTitle))
+            {
+                throw new CsvImportException("OriginalTitle-field is missing");
+            }
+
+            var production = new Production
+            {
+                ProductionTypeId = (int)csvRow.ProductionType,
+                OriginalTitle = csvRow.OriginalTitle
+            };
+
+            production.ProductionPersonRoles.AddRange(GetProductionPersonRoles(csvRow));
+            production.ProductionCompanyRoles.AddRange(GetProductionCompanyRoles(csvRow));
+
+            // TODO check productions with same name and type and merge data?            
+            // var productions = unitOfWork.Productions.GetProductionsByNameAndType(csvRow.OriginalTitle, csvRow.ProductionType);
+
+            return production;
+        }
+
+        private List<ProductionCompanyRole> GetProductionCompanyRoles(CsvRow csvRow)
+        {
             Company studio = null;
+            List<ProductionCompanyRole> companyRoles = new(); 
             
             if (!string.IsNullOrEmpty(csvRow.Studio)) 
             {
@@ -129,20 +152,16 @@ namespace Infrastructure.Integration.CSV.Importers
                     studio = new Company { Name = csvRow.Studio };
                     unitOfWork.Companies.Add(studio);
                 }
+                companyRoles.Add(new ProductionCompanyRole
+                {
+                    Company = studio,
+                    CompanyRoleTypeId = (int) CompanyRoleEnum.Studio
+                });
             }
-
-            var production = new Production
-            {
-                ProductionTypeId = (int)csvRow.ProductionType,
-                OriginalTitle = csvRow.OriginalTitle
-            };
-
-            production.PersonRoles.AddRange(GetDirectors(csvRow));
-
-            return production;
+            return companyRoles;
         }
 
-        private List<ProductionPersonRole> GetDirectors(CsvRow csvRow)
+        private List<ProductionPersonRole> GetProductionPersonRoles(CsvRow csvRow)
         {
             var directorNames = csvRow.Directors;
             var directors = new List<ProductionPersonRole>();

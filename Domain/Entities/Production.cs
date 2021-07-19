@@ -12,7 +12,9 @@ namespace Domain.Entities
         public string OriginalTitle { get; set; }
 
         public string CountryCode { get; set; }
-        public List<ProductionPersonRole> PersonRoles { get; } = new List<ProductionPersonRole>();
-        public List<ProductionCompanyRole> ProductionCompanyRoles { get; } = new List<ProductionCompanyRole>();
+        public List<ProductionPersonRole> ProductionPersonRoles { get; } = new();
+        public List<ProductionCompanyRole> ProductionCompanyRoles { get; } = new();
+    
+        public List<PublicationItem> PublicationItems { get; } = new();
     }
 }

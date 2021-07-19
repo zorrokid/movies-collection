@@ -12,6 +12,7 @@ namespace Infrastructure.Persistence.Database
         ProductionTypeRepository ProductionTypes { get; }
         PublicationItemRepository PublicationItems { get; }
         PersonRepository Persons { get; }
+        ProductionRepository Productions { get; }
         void SaveChanges();
     }
 
@@ -29,6 +30,7 @@ namespace Infrastructure.Persistence.Database
         public ProductionTypeRepository ProductionTypes { get; private set; }
         public PublicationItemRepository PublicationItems { get; private set; }
         public PersonRepository Persons { get; private set; }
+        public ProductionRepository Productions { get; private set;}
         private readonly ApplicationContext moviesContext;
 
         public UnitOfWork(ApplicationContext moviesContext)
@@ -42,6 +44,7 @@ namespace Infrastructure.Persistence.Database
             ProductionTypes = new ProductionTypeRepository(moviesContext);
             PublicationItems = new PublicationItemRepository(moviesContext);
             Persons = new PersonRepository(moviesContext);
+            Productions = new ProductionRepository(moviesContext);
         }
 
         public void SaveChanges()
