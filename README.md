@@ -131,7 +131,7 @@ Run CsvImport to get help about command line options.
 
 Example:
 
-    $ bin/Debug/net5.0/CsvImport -p data/Collections.csv -c /home/mikko/dev/dotnet/movies/MovieAPI/ -m 1
+    $ bin/Debug/net5.0/CsvImport -p data/Collections.csv -c /home/mikko/dev/dotnet/movies/MovieAPI/
 
 To use development appsettings, set environment before running CsvImport:
 

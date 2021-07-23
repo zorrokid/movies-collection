@@ -1,4 +1,4 @@
-using Application.UseCases.ImportCsv;
+using Application.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace CsvImport
@@ -11,18 +11,18 @@ namespace CsvImport
     public class CsvImportClient : ICsvImportClient
     {
         private readonly ILogger logger;
-        private readonly IImportPublicationsUseCase importPublicationsUseCase;
-
-        public CsvImportClient(ILogger logger, IImportPublicationsUseCase importPublicationsUseCase)
+        private readonly IIntegration integration;
+        
+        public CsvImportClient(ILogger logger, IIntegration integration)
         {
             this.logger = logger;
-            this.importPublicationsUseCase = importPublicationsUseCase;
+            this.integration = integration;
         }
 
         public void Import(string filePath)
         {
             logger.LogDebug($"Starting import from filepath {filePath}");
-            importPublicationsUseCase.Import(filePath);
+            integration.ImportPublications(filePath);
         }
 
     }

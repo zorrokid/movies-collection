@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Configure;
 using Infrastructure.Integration.CSV.Configuration;
-using Infrastructure.Integration.CSV.Enums;
 using Microsoft.Extensions.Logging;
 using Application.Configure;
 using CommandLine;
@@ -18,7 +17,6 @@ namespace CsvImport
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(o => 
                 {
-                    Console.WriteLine($"Import mode: {o.ImportMode}");
                     InitAndRun(o);
                 });
         }
@@ -34,16 +32,14 @@ namespace CsvImport
             });
             var logger = loggerFactory.CreateLogger<Program>();
 
-            logger.LogInformation($"Import mode is {options.ImportMode}");
-
-            RegisterServices(options.ImportMode, logger, options.ConfigPath);
+            RegisterServices(logger, options.ConfigPath);
             IServiceScope scope = serviceProvider.CreateScope();
             scope.ServiceProvider.GetRequiredService<ICsvImportClient>().Import(options.CsvFilePath);
             DisposeServices();
 
         }
 
-        private static void RegisterServices(ImportModeEnum importMode, ILogger logger, string configPath)
+        private static void RegisterServices(ILogger logger, string configPath)
         {
             var services = new ServiceCollection()
                 .AddScoped<ICsvImportClient, CsvImportClient>()
@@ -52,7 +48,7 @@ namespace CsvImport
                 .AddApplicationServices()
                 .AddInfrastructureServices(configPath)
                 .AddIntegrationServices()
-                .AddIntegrationCsvServices(importMode);
+                .AddIntegrationCsvServices();
 
             serviceProvider = services.BuildServiceProvider(true);
         }

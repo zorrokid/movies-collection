@@ -11,16 +11,59 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Integration.CSV.Importers
 {
-    public class PublicationItemCsvImporter : AbstractCsvImporter, ICsvImporter<CsvRow>
+    public interface ICsvImporter
     {
+         void Import(IEnumerable<CsvRow> csvRow);
+    }
 
-        public PublicationItemCsvImporter(IUnitOfWork unitOfWork, ILogger<PublicationItemCsvImporter> logger) 
-            : base(unitOfWork, logger)
+    public class CsvImporter : ICsvImporter
+    {
+        protected readonly IUnitOfWork unitOfWork;
+        protected readonly ILogger<CsvImporter> logger;
+
+        public CsvImporter(IUnitOfWork unitOfWork, ILogger<CsvImporter> logger)
         {
+            this.unitOfWork = unitOfWork;
+            this.logger = logger;
         }
-        
-        public void Import(CsvRow csvRow)
+
+        public void Import(IEnumerable<CsvRow> csvRows)
         {
+            // Import first rows which are marked as collection since some other rows are part of that collection
+            var collections = csvRows.Where(row => row.ProductionType == ProductionTypeEnum.Collection);
+            ImportCollectionRows(collections);
+
+            var collectionItems = csvRows.Where(row => row.ProductionType != ProductionTypeEnum.Collection);
+            ImportCollectionItemRows(collectionItems);
+        }
+
+        private void ImportCollectionRows(IEnumerable<CsvRow> csvRows)
+        {
+            foreach (var csvRow in csvRows)
+            {
+                var externalId = CreateExternalId(csvRow);
+                if (unitOfWork.Publications.GetByImportOrigin((int)ImportOriginEnum.CustomCsv, externalId) != null)
+                {
+                    logger.LogWarning($"Publication with id {externalId} already imported - skipping.");
+                    continue;
+                }
+
+                var publication = CreatePublication(csvRow, csvRow.Id);
+                unitOfWork.Publications.Add(publication);
+            }
+        }
+
+        private void ImportCollectionItemRows(IEnumerable<CsvRow> csvRows)
+        {
+            foreach (var csvRow in csvRows)
+            {
+                ImportCollectionItem(csvRow);
+            }
+        }
+
+        private void ImportCollectionItem(CsvRow csvRow)
+        {
+
             logger.LogInformation($"Start importing {csvRow}");
 
             var externalId = CreateExternalId(csvRow);
@@ -60,6 +103,66 @@ namespace Infrastructure.Integration.CSV.Importers
             logger.LogInformation($"Finish importing {csvRow}");
         }
 
+        private string CreateExternalId(CsvRow csvRow)
+        {
+            // Id from source material cannot be used since there are duplicate Id's
+            // Combine externalId from fields: Id, Barcode, CollecionId
+            var idParts = new string[]{ csvRow.Id, csvRow.Barcode, csvRow.IMDBCode, csvRow.CollectionId }
+                .Where(id => !string.IsNullOrWhiteSpace(id))
+                .ToArray();
+
+            if (!idParts.Any()) throw new CsvImportException($"Could not create externalId for {csvRow}.");
+            return string.Join("|", idParts);
+        }
+
+        private Publication CreatePublication(CsvRow csvRow, string externalId)
+        {
+            var publication = new Publication
+            {
+                ImportOriginId = (int)ImportOriginEnum.CustomCsv,
+                IdInImportOrigin = externalId,
+                IsVerified = csvRow.IsChecked,
+                Barcode = csvRow.Barcode,
+                HasBooklet = csvRow.HasLeaflet,
+                HasHologram = csvRow.HasHologram,
+                HasSlipCover = csvRow.HasSlipCover,
+                IsRental = csvRow.IsRental,
+                HasTwoSidedCover = csvRow.HasTwoSidedCover,
+                Notes = csvRow.Notes,
+                OriginalTitle = csvRow.OriginalTitle,
+                LocalTitle = csvRow.LocalTitle,
+                CaseTypeId = (int) csvRow.CaseType,
+                CountryCode = csvRow.Country,
+                ConditionClassId = (int) csvRow.Condition
+            };
+
+            if (csvRow.Publisher != null)
+            {
+                publication.PublicationCompanyRoles.Add(CreatePublicationCompanyRole(csvRow));
+            }
+            return publication;
+        }
+
+        private PublicationCompanyRole CreatePublicationCompanyRole(CsvRow csvRow)
+        {
+            var publisherName = csvRow.Publisher;
+            Company publisher = unitOfWork.Companies.GetByName(csvRow.Publisher).FirstOrDefault();
+            if (publisher == null)
+            {
+                publisher = new Company
+                {
+                    Name = publisherName
+                };
+            }
+            var publisherRole = unitOfWork.CompanyRoleTypes.GetById((int)CompanyRoleEnum.Publisher);
+            var publicationCompanyRole = new PublicationCompanyRole
+            {
+                Company = publisher,
+                Role = publisherRole
+            };
+            return publicationCompanyRole;
+        }
+
         private List<SubtitleLanguage> CreateSubtitles(CsvRow csvRow)
         {
             List<SubtitleLanguage> subtitles = new();
@@ -91,9 +194,9 @@ namespace Infrastructure.Integration.CSV.Importers
         {
             Publication publication = null;
 
-            // For publication item publication id depends weather CollectionId is set or not:
-            // - if CollectionId is set, this row is part of some publication (containing multiple publication items)
-            // - otherwise create a publication of this row containing publication item also created of this same row
+            // For publication item publication id depends wether CollectionId is set or not:
+            // - if CollectionId is set, this row is part of some publication (containing multiple publication items), add item as part of that publication
+            // - otherwise create a publication of this row containing a publication item created also from itself
             var publicationId = csvRow.CollectionId;
 
             if (!string.IsNullOrEmpty(publicationId))

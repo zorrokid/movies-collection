@@ -4,7 +4,6 @@ using Auth.Middleware;
 using ErrorHandling.Middleware;
 using Infrastructure.Configure;
 using Infrastructure.Integration.CSV.Configuration;
-using Infrastructure.Integration.CSV.Enums;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,7 +45,7 @@ namespace movieAPI
 
             // TODO separate integration from REST API? 
             services.AddIntegrationServices();
-            services.AddIntegrationCsvServices(ImportModeEnum.PublicationItem);
+            services.AddIntegrationCsvServices();
             
             services.AddApplicationServices();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

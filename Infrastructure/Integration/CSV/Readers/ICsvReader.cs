@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace Infrastructure.Integration.CSV.Readers
 {
-    public interface ICsvReader
+    public interface ICsvReader<TRowModel>
     {
-         void ReadCsv(string filePath, string delimiter = ",");
+         IEnumerable<TRowModel> ReadCsv(string filePath, string delimiter = ",");
     }
 }

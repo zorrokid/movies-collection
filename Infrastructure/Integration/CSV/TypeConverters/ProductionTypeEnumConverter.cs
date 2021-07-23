@@ -16,7 +16,8 @@ namespace Infrastructure.Integration.CSV.TypeConverters
             { "documentary", ProductionTypeEnum.Document },
             { "tv serie", ProductionTypeEnum.TvSerie },
             { "music", ProductionTypeEnum.Music },
-            { "other", ProductionTypeEnum.Undefined }
+            { "other", ProductionTypeEnum.Undefined },
+            { "collection", ProductionTypeEnum.Collection }
         };
 
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)

@@ -1,6 +1,5 @@
 
 using System.Reflection;
-using Application.UseCases.ImportCsv;
 using Auth.JWT;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +10,6 @@ namespace Application.Configure
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {   
-            services.AddScoped<IImportPublicationsUseCase, ImportPublicationsUseCase>();
             services.AddSingleton<ITokenGenerator, JwtTokenGenerator>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;

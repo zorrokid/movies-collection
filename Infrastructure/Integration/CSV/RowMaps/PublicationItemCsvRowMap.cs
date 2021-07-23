@@ -39,7 +39,9 @@ namespace Infrastructure.Integration.CSV.RowMaps
             Map(m => m.HasSceneList).Name("Kohtausluettelo").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.IsTwoSidedDisc).Name("2 Sided Disc").TypeConverter<YesNoBooleanConverter>();
             Map(m => m.HasTwoSidedCover).Name("2 Sided Cover").TypeConverter<YesNoBooleanConverter>();
-            // 	Series	Publisher	Studio
+            Map(m => m.Series).Name("Series");
+            Map(m => m.Publisher).Name("Publisher");
+            Map(m => m.Studio).Name("Studio");
         }
     }
 }
