@@ -41,10 +41,9 @@ namespace Infrastructure.Integration.CSV.Importers
         {
             foreach (var csvRow in csvRows)
             {
-                var externalId = CreateExternalId(csvRow);
-                if (unitOfWork.Publications.GetByImportOrigin((int)ImportOriginEnum.CustomCsv, externalId) != null)
+                if (unitOfWork.Publications.GetByImportOrigin((int)ImportOriginEnum.CustomCsv, csvRow.Id) != null)
                 {
-                    logger.LogWarning($"Publication with id {externalId} already imported - skipping.");
+                    logger.LogWarning($"Publication with id {csvRow.Id} already imported - skipping.");
                     continue;
                 }
 
