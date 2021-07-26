@@ -3,7 +3,6 @@ using System.Globalization;
 using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Infrastructure.Integration.CSV.Importers;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Integration.CSV.Readers
@@ -11,7 +10,6 @@ namespace Infrastructure.Integration.CSV.Readers
     public class CsvReader<TClassMap, TRowModel> : ICsvReader<TRowModel>
         where TClassMap : ClassMap<TRowModel>
     {
-        private readonly ICsvImporter csvImporter;
         private readonly ILogger<CsvReader<TClassMap, TRowModel>> logger;
 
         public CsvReader(ILogger<CsvReader<TClassMap, TRowModel>> logger)
