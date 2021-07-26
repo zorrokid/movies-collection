@@ -11,12 +11,12 @@ namespace Infrastructure.Integration.CSV.TypeConverters
     {
         private static Dictionary<String, ConditionClassEnum> EnumStringMap = new Dictionary<String, ConditionClassEnum>
         {
-           { "Still Wrapped",ConditionClassEnum.New },
-           { "Poor - Slightly Damaged",ConditionClassEnum.Poor },
-           { "Bad - Damaged",ConditionClassEnum.Bad },
-           { "Good",ConditionClassEnum.Good },
-           { "Fair",ConditionClassEnum.Fair },
-           { "Excellent",ConditionClassEnum.Excellent },
+           { "still wrapped",ConditionClassEnum.New },
+           { "poor - slightly damaged",ConditionClassEnum.Poor },
+           { "bad - damaged",ConditionClassEnum.Bad },
+           { "good",ConditionClassEnum.Good },
+           { "fair",ConditionClassEnum.Fair },
+           { "excellent",ConditionClassEnum.Excellent },
            
         };
 
