@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Auth.Interfaces;
 using Auth.JWT;
+using Auth.Exceptions;
 using AutoMapper;
 using MediatR;
 using BCryptNet = BCrypt.Net.BCrypt;
@@ -27,7 +28,7 @@ namespace Application.UseCases.AuthenticateUseCase
 
             if (user == null || !BCryptNet.Verify(request.Password, user.PasswordHash))
             {
-                return null;
+                throw new AuthenticationException($"Could not log in user {request.UserName}.");
             }
 
             var response = mapper.Map<AuthenticateResponse>(user);
