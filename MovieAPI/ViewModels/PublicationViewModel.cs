@@ -9,7 +9,7 @@ namespace MovieAPI.ViewModels
         public string OriginalTitle { get; set; }
         public string LocalTitle { get; set; }
         public bool IsVerified { get; set; }
-        public string CountryCode { get; set; }
+        public string[] CountryCode { get; set; }
         public string Barcode { get; set; }
         public int CaseTypeId { get; set; }
         public string CaseTypeName { get; set; }
