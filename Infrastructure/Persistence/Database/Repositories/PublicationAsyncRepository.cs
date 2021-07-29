@@ -19,6 +19,7 @@ namespace Infrastructure.Persistence.Database.Repositories
                 .Where(pub => pub.OriginalTitle.ToLower().Contains(searchPattern.ToLower())
                     || pub.LocalTitle.ToLower().Contains(searchPattern))
                 .Include(p => p.ConditionClass)
+                .Include(p => p.PublicationCountryCodes)
                 .Include(p => p.PublicationItems)
                 .ThenInclude(pi => pi.Production)
                 .ToListAsync();
