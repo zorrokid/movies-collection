@@ -131,7 +131,6 @@ namespace Infrastructure.Integration.CSV.Importers
                 OriginalTitle = csvRow.OriginalTitle,
                 LocalTitle = csvRow.LocalTitle,
                 CaseTypeId = (int) csvRow.CaseType,
-                CountryCode = csvRow.Country,
                 ConditionClassId = (int) csvRow.Condition
             };
 
@@ -139,6 +138,7 @@ namespace Infrastructure.Integration.CSV.Importers
             {
                 publication.PublicationCompanyRoles.Add(CreatePublicationCompanyRole(csvRow));
             }
+            publication.PublicationCountryCodes.AddRange(CreatePublicationCountryCodes(csvRow));
             return publication;
         }
 
@@ -160,6 +160,19 @@ namespace Infrastructure.Integration.CSV.Importers
                 Role = publisherRole
             };
             return publicationCompanyRole;
+        }
+
+        private List<PublicationCountryCode> CreatePublicationCountryCodes(CsvRow csvRow)
+        {
+            List<PublicationCountryCode> countryCodes = new();
+            foreach(var code in csvRow.CountryCodes)
+            {
+                countryCodes.Add(new PublicationCountryCode
+                {
+                    CountryCode = code
+                });
+            }
+            return countryCodes;
         }
 
         private List<SubtitleLanguage> CreateSubtitles(CsvRow csvRow)

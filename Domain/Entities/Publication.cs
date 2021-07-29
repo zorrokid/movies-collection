@@ -12,7 +12,6 @@ namespace Domain.Entities
         public string OriginalTitle { get; set; }
         public string LocalTitle { get; set; }
         public bool IsVerified { get; set; }
-        public string CountryCode { get; set; }
         public string Barcode { get; set; }
         public int CaseTypeId { get; set; }
         public CaseType CaseType { get; set; }
@@ -27,6 +26,7 @@ namespace Domain.Entities
         public List<PublicationCompanyRole> PublicationCompanyRoles { get; } = new List<PublicationCompanyRole>();
         public List<PublicationItem> PublicationItems {get; } = new List<PublicationItem>();
         public List<CoverLanguage> CoverLanguages { get; } = new List<CoverLanguage>();
+        public List<PublicationCountryCode> PublicationCountryCodes { get; } = new List<PublicationCountryCode>();
 
         public override string ToString()
         {

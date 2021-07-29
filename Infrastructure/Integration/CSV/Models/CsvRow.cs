@@ -12,7 +12,7 @@ namespace Infrastructure.Integration.CSV.Models
         public ProductionTypeEnum ProductionType { get; set;}
         public MediaTypeEnum[] MediaType { get; set;}
         public string Edition { get; set; }
-        public string Country { get; set; }
+        public string[] CountryCodes { get; set; }
         public CaseTypeEnum CaseType { get; set; }
         public int? Discs { get; set; }
         public bool HasSubFi { get; set; }
