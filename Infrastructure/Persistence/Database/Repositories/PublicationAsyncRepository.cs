@@ -22,6 +22,8 @@ namespace Infrastructure.Persistence.Database.Repositories
                 .Include(p => p.PublicationCountryCodes)
                 .Include(p => p.PublicationItems)
                 .ThenInclude(pi => pi.Production)
+                .OrderBy(p => p.LocalTitle)
+                .ThenBy(p => p.OriginalTitle)
                 .ToListAsync();
         }
     }
